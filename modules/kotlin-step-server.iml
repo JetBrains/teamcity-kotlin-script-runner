@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<module type="JAVA_MODULE" version="4">
+  <component name="FacetManager">
+    <facet type="Spring" name="Spring">
+      <configuration />
+    </facet>
+  </component>
+  <component name="NewModuleRootManager" inherit-compiler-output="true">
+    <content url="file://$MODULE_DIR$/../teamcity-kotlin-step-server">
+      <sourceFolder url="file://$MODULE_DIR$/../teamcity-kotlin-step-server/src/main/kotlin" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/../teamcity-kotlin-step-server/src/main/resources" type="java-resource" />
+      <excludeFolder url="file://$MODULE_DIR$/../teamcity-kotlin-step-server/build" />
+    </content>
+    <orderEntry type="inheritedJdk" />
+    <orderEntry type="sourceFolder" forTests="false" />
+    <orderEntry type="module-library">
+      <library>
+        <CLASSES>
+          <root url="file://$MODULE_DIR$/../../../lib/annotations" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES>
+          <root url="file://$MODULE_DIR$/../../../lib/annotations" />
+        </SOURCES>
+        <jarDirectory url="file://$MODULE_DIR$/../../../lib/annotations" recursive="false" />
+        <jarDirectory url="file://$MODULE_DIR$/../../../lib/annotations" recursive="false" type="SOURCES" />
+      </library>
+    </orderEntry>
+    <orderEntry type="module" module-name="common" />
+    <orderEntry type="module" module-name="server-openapi" />
+    <orderEntry type="module" module-name="server-common-api" />
+    <orderEntry type="library" name="Spring-Framework" level="project" />
+    <orderEntry type="module" module-name="idea-obsolete-openapi" />
+    <orderEntry type="module" module-name="server" />
+    <orderEntry type="module" module-name="web-openapi" />
+    <orderEntry type="library" scope="PROVIDED" name="kotlin" level="project" />
+    <orderEntry type="module" module-name="server-tools-api" />
+  </component>
+</module>
