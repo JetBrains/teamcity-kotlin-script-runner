@@ -14,6 +14,7 @@ repositories {
 }
 
 dependencies {
+    implementation(project(":teamcity-kotlin-step-common"))
     agent (project(path = ":teamcity-kotlin-step-agent", configuration = "plugin"))
     implementation(kotlin("stdlib-jdk8"))
     provided("org.jetbrains.teamcity.internal:server:${rootProject.extra["teamcityVersion"]}")

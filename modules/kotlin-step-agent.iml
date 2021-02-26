@@ -50,5 +50,6 @@
     <orderEntry type="library" scope="TEST" name="jmock-2.5.1" level="project" />
     <orderEntry type="module" module-name="server-tools-api" />
     <orderEntry type="module" module-name="server-tools-api" />
+    <orderEntry type="module" module-name="kotlin-step-common" />
   </component>
 </module>

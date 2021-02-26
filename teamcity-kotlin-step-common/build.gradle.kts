@@ -13,7 +13,6 @@ repositories {
 }
 
 dependencies {
-    implementation(project(":teamcity-kotlin-step-common"))
     implementation(kotlin("stdlib-jdk8"))
     provided("org.jetbrains.teamcity:agent-api:${rootProject.extra["teamcityVersion"]}")
     provided("org.jetbrains.teamcity.internal:agent:${rootProject.extra["teamcityVersion"]}")

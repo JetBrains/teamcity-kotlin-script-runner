@@ -1,7 +1,5 @@
 package jetbrains.buildServer.runner.kotlinBuildStep
 
-import org.jetbrains.annotations.NonNls
-
 object Constants {
     val PARAM_SCRIPT_TYPE = "scriptType"
     val PARAM_SCRIPT_CONTENT = "script.content"

@@ -35,5 +35,6 @@
     <orderEntry type="module" module-name="web-openapi" />
     <orderEntry type="library" scope="PROVIDED" name="kotlin" level="project" />
     <orderEntry type="module" module-name="server-tools-api" />
+    <orderEntry type="module" module-name="kotlin-step-common" />
   </component>
 </module>
