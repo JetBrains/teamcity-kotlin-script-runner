@@ -19,8 +19,8 @@ version = (extra["pluginVersion"] ?: "SNAPSHOT") as String
 extra["teamcityVersion"] = "2020.2"
 
 tasks.register<Copy>("pluginZip") {
-    from("teamcity-kotlin-step-server/build/distributions/teamcity-kotlin-step-server-$version.zip")
+    from("kotlin-step-server/build/distributions/kotlin-step-server-$version.zip")
     into("build/distributions")
-    rename("teamcity-kotlin-step-server-$version.zip", "kotlin-step.zip")
+    rename("kotlin-step-server-$version.zip", "kotlin-step.zip")
 }
 

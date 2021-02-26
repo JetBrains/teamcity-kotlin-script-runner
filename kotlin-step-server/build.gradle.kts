@@ -1,6 +1,7 @@
 plugins {
     kotlin("jvm")
-    id ("com.github.rodm.teamcity-agent")
+    id ("com.github.rodm.teamcity-server")
+    id ("com.github.rodm.teamcity-environments")
 }
 
 group = "org.jetbrains.teamcity"
@@ -13,10 +14,10 @@ repositories {
 }
 
 dependencies {
-    implementation(project(":teamcity-kotlin-step-common"))
+    implementation(project(":kotlin-step-common"))
+    agent (project(path = ":kotlin-step-agent", configuration = "plugin"))
     implementation(kotlin("stdlib-jdk8"))
-    provided("org.jetbrains.teamcity:agent-api:${rootProject.extra["teamcityVersion"]}")
-    provided("org.jetbrains.teamcity.internal:agent:${rootProject.extra["teamcityVersion"]}")
+    provided("org.jetbrains.teamcity.internal:server:${rootProject.extra["teamcityVersion"]}")
 }
 
 tasks {
@@ -37,12 +38,17 @@ tasks.getByName<Test>("test") {
 teamcity {
     version = rootProject.extra["teamcityVersion"] as String
 
-    agent {
-        descriptor {
-            pluginDeployment {
-                useSeparateClassloader = true
+    server {
+        descriptor = file("../teamcity-plugin.xml")
+        tokens = mapOf("Version" to pluginVersion)
+/*
+        files {
+            into("kotlin-dsl") {
+                from("kotlin-dsl")
             }
         }
+
+ */
     }
 
 }

@@ -1,4 +1,4 @@
 rootProject.name = "teamcity-kotlin-step"
-include("teamcity-kotlin-step-common")
-include("teamcity-kotlin-step-server")
-include("teamcity-kotlin-step-agent")
+include("kotlin-step-common")
+include("kotlin-step-server")
+include("kotlin-step-agent")
