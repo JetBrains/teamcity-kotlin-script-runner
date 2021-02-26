@@ -7,9 +7,8 @@ import jetbrains.buildServer.agent.runner.JavaRunnerUtil
 import jetbrains.buildServer.agent.runner.ProgramCommandLine
 import jetbrains.buildServer.runner.CommandLineArgumentsUtil
 import jetbrains.buildServer.runner.JavaRunnerConstants
-import jetbrains.buildServer.runner.SimpleRunnerConstants
-import jetbrains.buildServer.serverSide.TeamCityProperties
 import jetbrains.buildServer.util.FileUtil
+import jetbrains.buildServer.util.StringUtil
 import java.io.File
 
 class KotlinStepRunnerService: BuildServiceAdapter() {
@@ -20,7 +19,7 @@ class KotlinStepRunnerService: BuildServiceAdapter() {
     }
 
     override fun makeProgramCommandLine(): ProgramCommandLine {
-        val scriptFile = createScript()
+        val scriptFile = getOrCreateScript()
         return createCommandLine(scriptFile)
     }
 
@@ -52,15 +51,26 @@ class KotlinStepRunnerService: BuildServiceAdapter() {
     }
 
 
-    private fun createScript(): String {
-        val scriptContent = getScriptContent()
-        val scriptFile = File.createTempFile("script", ".main.kts", getAgentTempDirectory())
-        FileUtil.writeFile(scriptFile, scriptContent, "UTF-8");
+    private fun getOrCreateScript(): String {
+        val scriptType = runnerParameters[Constants.PARAM_SCRIPT_TYPE]
+        val scriptFile = if (scriptType.equals(Constants.SCRIPT_TYPE_FILE)) {
+            val scriptFileName = runnerParameters[Constants.PARAM_SCRIPT_FILE]
+            if (scriptFileName == null || scriptFileName.isEmpty())
+                throw IllegalArgumentException("No script file name provided")
+            File(checkoutDirectory, scriptFileName)
+        } else {
+            val scriptContent = getScriptContent()
+            if (StringUtil.isEmpty(scriptContent))
+                throw IllegalArgumentException("No script provided")
+            val scriptFile = File.createTempFile("script", ".main.kts", getAgentTempDirectory())
+            FileUtil.writeFile(scriptFile, scriptContent, "UTF-8");
+            scriptFile
+        }
         return scriptFile.getAbsolutePath();
     }
 
     protected fun getScriptContent(): String {
-        return getRunnerContext().getRunnerParameters().get(SimpleRunnerConstants.SCRIPT_CONTENT)
+        return getRunnerContext().getRunnerParameters().get(Constants.PARAM_SCRIPT_CONTENT)
                 ?: throw RunBuildException("Kotlin script content is not specified")
     }
 }
