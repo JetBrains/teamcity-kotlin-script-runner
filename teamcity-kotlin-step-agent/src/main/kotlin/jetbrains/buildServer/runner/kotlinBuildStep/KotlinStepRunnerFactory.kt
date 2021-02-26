@@ -7,7 +7,7 @@ import jetbrains.buildServer.agent.runner.CommandLineBuildServiceFactory
 
 class KotlinStepRunnerFactory : CommandLineBuildServiceFactory, AgentBuildRunnerInfo {
     override fun getType(): String {
-        return KotlinStepConstants.TYPE
+        return Constants.RUNNER_TYPE
     }
 
     override fun canRun(agentConfiguration: BuildAgentConfiguration): Boolean {

@@ -1,6 +1,9 @@
 package jetbrains.buildServer.runner.kotlinBuildStep
 
 object Constants {
+
+    val RUNNER_TYPE = "kotlinScript"
+
     val PARAM_SCRIPT_TYPE = "scriptType"
     val PARAM_SCRIPT_CONTENT = "script.content"
     val PARAM_SCRIPT_FILE = "script.file"
