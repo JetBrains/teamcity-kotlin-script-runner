@@ -1,6 +1,5 @@
 plugins {
     kotlin("jvm") version "1.4.21" apply false
-    id ("com.github.rodm.teamcity-server") version "1.2" apply false
 }
 
 group = "org.jetbrains.teamcity"
@@ -10,17 +9,18 @@ allprojects {
         mavenCentral()
         jcenter()
         maven(url = "https://download.jetbrains.com/teamcity-repository")
+        maven(url = "https://repo.labs.intellij.net/teamcity")
     }
 }
 
 extra["pluginVersion"] = "${if (project.hasProperty("PluginVersion")) project.property("PluginVersion") else "SNAPSHOT"}"
 version = (extra["pluginVersion"] ?: "SNAPSHOT") as String
 
-extra["teamcityVersion"] = "2020.2"
+extra["teamcityVersion"] = project.findProperty("teamcityVersion") ?: "2021.1-SNAPSHOT"
 
 tasks.register<Copy>("pluginZip") {
-    from("kotlin-step-server/build/distributions/kotlin-step-server-$version.zip")
+    from("kotlin-step-server/build/distributions/kotlin-step-$version.zip")
     into("build/distributions")
-    rename("kotlin-step-server-$version.zip", "kotlin-step.zip")
+    rename("kotlin-step-$version.zip", "kotlin-step.zip")
 }
 

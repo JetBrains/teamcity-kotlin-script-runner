@@ -1,6 +1,6 @@
 plugins {
     kotlin("jvm")
-    id ("com.github.rodm.teamcity-agent")
+    id("com.github.rodm.teamcity-agent") version "1.1.1"
 }
 
 group = "org.jetbrains.teamcity"
@@ -13,8 +13,8 @@ repositories {
 }
 
 dependencies {
-    implementation(project(":kotlin-step-common"))
-    implementation(kotlin("stdlib-jdk8"))
+    agent(project(":kotlin-step-common"))
+    agent(kotlin("stdlib"))
     provided("org.jetbrains.teamcity:agent-api:${rootProject.extra["teamcityVersion"]}")
     provided("org.jetbrains.teamcity.internal:agent:${rootProject.extra["teamcityVersion"]}")
 }
@@ -35,6 +35,7 @@ tasks.getByName<Test>("test") {
 }
 
 teamcity {
+
     version = rootProject.extra["teamcityVersion"] as String
 
     agent {
