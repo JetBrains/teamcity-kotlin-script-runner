@@ -4,26 +4,34 @@ import jetbrains.buildServer.DevelopmentMode
 import jetbrains.buildServer.log.Loggers
 import jetbrains.buildServer.plugins.files.JarSearcherBase
 import jetbrains.buildServer.tools.*
+import jetbrains.buildServer.tools.utils.URLDownloader
 import jetbrains.buildServer.util.ArchiveExtractorManager
 import jetbrains.buildServer.util.ArchiveFileSelector
 import jetbrains.buildServer.util.FileUtil
 import jetbrains.buildServer.util.UnsupportedArchiveTypeException
+import jetbrains.buildServer.util.ssl.SSLTrustStoreProvider
 import jetbrains.buildServer.web.openapi.PluginDescriptor
 import java.io.File
 import java.io.IOException
 
-class KotlinServerToolProvider(val pluginDescriptor: PluginDescriptor, val archiveManager: ArchiveExtractorManager): ServerToolProviderAdapter() {
+class KotlinServerToolProvider(val pluginDescriptor: PluginDescriptor, val archiveManager: ArchiveExtractorManager, val sslTrustStoreProvider: SSLTrustStoreProvider):
+        ServerToolProviderAdapter() {
 
     private val myBundledVersions = hashMapOf<String, InstalledToolVersion>()
-    private val myToolVersions = hashMapOf<String, ToolVersion>()
+    private val myToolVersions = hashMapOf<String, KotlinDowloadableToolVersion>()
 
     init {
+        myToolVersions.put(KOTLIN_1_3_72.id, KOTLIN_1_3_72)
+        myToolVersions.put(KOTLIN_1_4_21.id, KOTLIN_1_4_21)
+        /*
         val bundledToolsLocation: File = File(pluginDescriptor.getPluginRoot(), "tools")
         registerToolVersion(KOTLIN_1_3_72, File(bundledToolsLocation, KOTLIN_1_3_72.id + ".zip"))
         registerToolVersion(KOTLIN_1_4_21, File(bundledToolsLocation, KOTLIN_1_4_21.id + ".zip"))
+         */
     }
 
-    private fun registerToolVersion(toolVersion: ToolVersion, packedAgentTool: File) {
+    /*
+    private fun registerToolVersion(toolVersion: KotlinDowloadableToolVersion, packedAgentTool: File) {
         myToolVersions.put(toolVersion.id, toolVersion)
         if (packedAgentTool.isFile || DevelopmentMode.isEnabled) {
             myBundledVersions.put(toolVersion.id, SimpleInstalledToolVersion.newBundledToAgentTool(toolVersion, packedAgentTool))
@@ -31,12 +39,13 @@ class KotlinServerToolProvider(val pluginDescriptor: PluginDescriptor, val archi
             Loggers.SERVER.warn("Bundled agent tool " + toolVersion.displayName + " package not found on path " + packedAgentTool.absolutePath)
         }
     }
+     */
 
     override fun getType(): ToolType = KotlinToolType.INSTANCE
 
-    override fun getBundledToolVersions() = myBundledVersions.values
+    override fun getBundledToolVersions() = listOf<InstalledToolVersion>() // myBundledVersions.values
 
-    override fun getDefaultBundledVersionId() = KOTLIN_1_4_21.id
+    override fun getDefaultBundledVersionId() = null
 
     override fun getAvailableToolVersions() = myToolVersions.values
 
@@ -45,7 +54,11 @@ class KotlinServerToolProvider(val pluginDescriptor: PluginDescriptor, val archi
         try {
             archiveManager.extractFiles(toolPackage, ArchiveFileSelector {
                 if (toolId == null) {
-                    val top = if (it.contains("/")) { it.substring(0, it.indexOf("/")) } else { it }
+                    val top = if (it.contains("/")) {
+                        it.substring(0, it.indexOf("/"))
+                    } else {
+                        it
+                    }
                     if (top.startsWith(KOTLIN_PREFIX)) {
                         toolId = top
                     }
@@ -65,6 +78,19 @@ class KotlinServerToolProvider(val pluginDescriptor: PluginDescriptor, val archi
         }
     }
 
+    @Throws(ToolException::class)
+    override fun fetchToolPackage(toolVersion: ToolVersion, targetDirectory: File): File {
+        val dowloadableVersion = myToolVersions.get(toolVersion.id)
+        if (dowloadableVersion == null)
+            throw ToolException("Tool version ${toolVersion.id} not found")
+        val location = File(targetDirectory, dowloadableVersion.getDestinationFileName())
+        try {
+            URLDownloader.download(dowloadableVersion.getDownloadUrl(), sslTrustStoreProvider.getTrustStore(), location)
+        } catch (e: Throwable) {
+            throw ToolException("Failed to download package " + toolVersion + " to " + location + e.message, e)
+        }
+        return location
+    }
 
     @Throws(ToolException::class)
     override fun unpackToolPackage(toolPackage: File, targetDirectory: File) {
@@ -93,8 +119,8 @@ class KotlinServerToolProvider(val pluginDescriptor: PluginDescriptor, val archi
 
 
     companion object {
-        val KOTLIN_1_3_72: ToolVersion = SimpleToolVersion(KotlinToolType.INSTANCE, "1.3.72", "kotlin_1_3_72")
-        val KOTLIN_1_4_21: ToolVersion = SimpleToolVersion(KotlinToolType.INSTANCE, "1.4.21", "kotlin_1_4_21")
+        val KOTLIN_1_3_72 = KotlinDowloadableToolVersion("1.3.72")
+        val KOTLIN_1_4_21 = KotlinDowloadableToolVersion("1.4.21")
 
         val KOTLIN_PREFIX = "kotlin_"
     }
