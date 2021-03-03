@@ -6,7 +6,7 @@ plugins {
 
 group = "org.jetbrains.teamcity"
 
-val pluginVersion = (rootProject.extra["pluginVersion"] ?: "SNAPSHOT") as String
+val pluginVersion = rootProject.extra["pluginVersion"]
 version = pluginVersion
 
 repositories {

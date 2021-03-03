@@ -14,7 +14,7 @@ allprojects {
 }
 
 extra["pluginVersion"] = "${if (project.hasProperty("PluginVersion")) project.property("PluginVersion") else "SNAPSHOT"}"
-version = (extra["pluginVersion"] ?: "SNAPSHOT") as String
+version = extra["pluginVersion"]
 
 extra["teamcityVersion"] = project.findProperty("teamcityVersion") ?: "2021.1-SNAPSHOT"
 

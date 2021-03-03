@@ -5,8 +5,7 @@ plugins {
 
 group = "org.jetbrains.teamcity"
 
-val pluginVersion = (rootProject.extra["pluginVersion"] ?: "SNAPSHOT") as String
-version = pluginVersion
+version = rootProject.extra["pluginVersion"]
 
 repositories {
     mavenCentral()

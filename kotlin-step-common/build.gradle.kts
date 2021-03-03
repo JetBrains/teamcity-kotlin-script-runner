@@ -4,8 +4,7 @@ plugins {
 
 group = "org.jetbrains.teamcity"
 
-val pluginVersion = (rootProject.extra["pluginVersion"] ?: "SNAPSHOT") as String
-version = pluginVersion
+version = rootProject.extra["pluginVersion"]
 
 repositories {
     mavenCentral()
@@ -21,12 +20,6 @@ tasks {
     }
     compileTestKotlin {
         kotlinOptions.jvmTarget = "1.8"
-    }
-}
-
-tasks.getByName<Test>("test") {
-    useTestNG {
-        suites("/src/test/teamcity-pugin-kotlin-step.xml")
     }
 }
 
