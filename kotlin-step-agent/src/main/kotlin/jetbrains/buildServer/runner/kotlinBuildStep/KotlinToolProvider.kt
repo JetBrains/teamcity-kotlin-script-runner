@@ -25,14 +25,14 @@ class KotlinToolProvider(toolProvidersRegistry: ToolProvidersRegistry, agentConf
             override fun getPath(toolName: String,
                                  build: AgentRunningBuild,
                                  runner: BuildRunnerContext): String {
-                return getKotlinPath(agentConfiguration, runner)
+                return getKotlinPath(runner)
             }
         })
     }
 
 
     @Throws(ToolCannotBeFoundException::class)
-    private fun getKotlinPath(agentConfiguration: BuildAgentConfiguration, runner:BuildRunnerContext): String {
+    private fun getKotlinPath(runner:BuildRunnerContext): String {
         val runnerParameters: Map<String, String> = runner.getRunnerParameters()
         return runnerParameters["kotlin.path"] ?: throw ToolCannotBeFoundException("No Kotlin tool path provided")
     }
