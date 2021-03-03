@@ -21,8 +21,7 @@ class KotlinServerToolProvider(val pluginDescriptor: PluginDescriptor, val archi
     private val myToolVersions = hashMapOf<String, KotlinDowloadableToolVersion>()
 
     init {
-        myToolVersions.put(KOTLIN_1_3_72.id, KOTLIN_1_3_72)
-        myToolVersions.put(KOTLIN_1_4_21.id, KOTLIN_1_4_21)
+        KOTLIN_VERSIONS_SUPPORTED.forEach { myToolVersions.put(it.id, it) }
     }
 
     override fun getType(): ToolType = KotlinToolType.INSTANCE
@@ -89,9 +88,7 @@ class KotlinServerToolProvider(val pluginDescriptor: PluginDescriptor, val archi
 
 
     companion object {
-        val KOTLIN_1_3_72 = KotlinDowloadableToolVersion("1.3.72")
-        val KOTLIN_1_4_21 = KotlinDowloadableToolVersion("1.4.21")
-
+        val KOTLIN_VERSIONS_SUPPORTED = listOf("1.3.72", "1.4.31").map { KotlinDowloadableToolVersion(it) }
         val KOTLIN_COMPILER_PREFIX = "kotlin-compiler-"
         val DOT_ZIP = ".zip"
     }
