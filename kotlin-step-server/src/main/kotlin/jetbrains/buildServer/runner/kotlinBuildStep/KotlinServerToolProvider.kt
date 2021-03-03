@@ -50,32 +50,18 @@ class KotlinServerToolProvider(val pluginDescriptor: PluginDescriptor, val archi
     override fun getAvailableToolVersions() = myToolVersions.values
 
     override fun tryGetPackageVersion(toolPackage: File): GetPackageVersionResult {
-        var toolId: String? = null
-        try {
-            archiveManager.extractFiles(toolPackage, ArchiveFileSelector {
-                if (toolId == null) {
-                    val top = if (it.contains("/")) {
-                        it.substring(0, it.indexOf("/"))
-                    } else {
-                        it
-                    }
-                    if (top.startsWith(KOTLIN_PREFIX)) {
-                        toolId = top
-                    }
-                }
-                null
-            })
-        } catch (e: Exception) {
-            Loggers.SERVER.warnAndDebugDetails("Error while trying to get package version of Kotlin distribution [" + toolPackage.absolutePath + "]", e)
-        }
+        val zipName = toolPackage.name
+        if (!(zipName.startsWith(KOTLIN_COMPILER_PREFIX) || zipName.endsWith(DOT_ZIP)))
+            return GetPackageVersionResult.error("Failed to determine Kotlin version. Make sure the ${zipName} file is a valid Kotlin archive")
 
-        return if (toolId != null) {
-            val toolVersion = myToolVersions.get(toolId!!)
-            if (toolVersion == null) GetPackageVersionResult.error("Failed to determine Kotlin version for tool id ${toolId}")
-            else GetPackageVersionResult.version(toolVersion)
-        } else {
-            GetPackageVersionResult.error("Failed to determine Kotlin version. Make sure file is a valid Kotlin archive")
-        }
+        val versionNumber = zipName.substring(KOTLIN_COMPILER_PREFIX.length, zipName.length - DOT_ZIP.length)
+        val toolId = ToolVersionIdHelper.getToolId(KotlinToolType.INSTANCE, versionNumber)
+        val toolVersion = myToolVersions.get(toolId)
+
+        return if (toolVersion == null)
+            GetPackageVersionResult.error("Failed to determine Kotlin version for tool id ${toolId}")
+        else
+            GetPackageVersionResult.version(toolVersion)
     }
 
     @Throws(ToolException::class)
@@ -122,6 +108,7 @@ class KotlinServerToolProvider(val pluginDescriptor: PluginDescriptor, val archi
         val KOTLIN_1_3_72 = KotlinDowloadableToolVersion("1.3.72")
         val KOTLIN_1_4_21 = KotlinDowloadableToolVersion("1.4.21")
 
-        val KOTLIN_PREFIX = "kotlin_"
+        val KOTLIN_COMPILER_PREFIX = "kotlin-compiler-"
+        val DOT_ZIP = ".zip"
     }
 }
