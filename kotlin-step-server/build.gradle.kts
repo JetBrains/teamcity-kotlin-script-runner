@@ -15,8 +15,8 @@ repositories {
 
 dependencies {
     agent(project(path = ":kotlin-step-agent", configuration = "plugin"))
-    server(project(":kotlin-step-common"))
-    server(kotlin("stdlib"))
+    compile(project(":kotlin-step-common"))
+    compile(kotlin("stdlib"))
     provided("org.jetbrains.teamcity.internal:server:${rootProject.extra["teamcityVersion"]}")
     provided("org.jetbrains.teamcity.internal:server-tools:${rootProject.extra["teamcityVersion"]}")
 }
