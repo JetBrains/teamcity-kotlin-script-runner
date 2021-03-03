@@ -25,20 +25,21 @@ class KotlinStepRunnerService: BuildServiceAdapter() {
     }
 
     protected fun createCommandLine(script: String): ProgramCommandLine {
+        val lib = File(getToolPath(KotlinToolProvider.TOOL_NAME), LIB_DIR)
         return JavaCommandLineBuilder()
                 .withJavaHome(getRunnerParameters().get(JavaRunnerConstants.TARGET_JDK_HOME), getRunnerContext().isVirtualContext())
                 .withBaseDir(getCheckoutDirectory().getAbsolutePath())
                 .withEnvVariables(getEnvironmentVariables())
                 .withJvmArgs(JavaRunnerUtil.extractJvmArgs(getRunnerParameters()))
-                .withClassPath(getClasspath())
-                .withMainClass("org.jetbrains.kotlin.cli.jvm.K2JVMCompiler")
-                .withProgramArgs(getProgramArgs(script))
+                .withClassPath(getClasspath(lib))
+                .withMainClass("org.jetbrains.kotlin.preloading.Preloader")
+                .withProgramArgs(getProgramArgs(script, lib))
                 .withWorkingDir(getWorkingDirectory().getAbsolutePath())
                 .build()
     }
 
-    private fun getProgramArgs(script: String): List<String> {
-        val scriptArgs = listOf("-script", script)
+    private fun getProgramArgs(script: String, lib: File): List<String> {
+        val scriptArgs = listOf("-cp", File(lib, "kotlin-compiler.jar").canonicalPath, "org.jetbrains.kotlin.cli.jvm.K2JVMCompiler", "-script", script)
         val ktsArgs = getRunnerParameters().get(PARAM_KTS_ARGS)
         if (ktsArgs == null || ktsArgs.isEmpty())
             return scriptArgs
@@ -46,9 +47,8 @@ class KotlinStepRunnerService: BuildServiceAdapter() {
             return scriptArgs + CommandLineArgumentsUtil.extractArguments(ktsArgs)
     }
 
-    private fun getClasspath(): String {
-        val lib = File(getToolPath(KotlinToolProvider.TOOL_NAME), LIB_DIR)
-        return lib.listFiles()?.map { FileUtil.getCanonicalFile(it).path }?.joinToString(File.pathSeparator) ?: ""
+    private fun getClasspath(lib: File): String {
+        return File(lib, "kotlin-preloader.jar").canonicalPath
     }
 
 
