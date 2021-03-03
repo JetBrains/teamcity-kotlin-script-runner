@@ -23,27 +23,11 @@ class KotlinServerToolProvider(val pluginDescriptor: PluginDescriptor, val archi
     init {
         myToolVersions.put(KOTLIN_1_3_72.id, KOTLIN_1_3_72)
         myToolVersions.put(KOTLIN_1_4_21.id, KOTLIN_1_4_21)
-        /*
-        val bundledToolsLocation: File = File(pluginDescriptor.getPluginRoot(), "tools")
-        registerToolVersion(KOTLIN_1_3_72, File(bundledToolsLocation, KOTLIN_1_3_72.id + ".zip"))
-        registerToolVersion(KOTLIN_1_4_21, File(bundledToolsLocation, KOTLIN_1_4_21.id + ".zip"))
-         */
     }
-
-    /*
-    private fun registerToolVersion(toolVersion: KotlinDowloadableToolVersion, packedAgentTool: File) {
-        myToolVersions.put(toolVersion.id, toolVersion)
-        if (packedAgentTool.isFile || DevelopmentMode.isEnabled) {
-            myBundledVersions.put(toolVersion.id, SimpleInstalledToolVersion.newBundledToAgentTool(toolVersion, packedAgentTool))
-        } else {
-            Loggers.SERVER.warn("Bundled agent tool " + toolVersion.displayName + " package not found on path " + packedAgentTool.absolutePath)
-        }
-    }
-     */
 
     override fun getType(): ToolType = KotlinToolType.INSTANCE
 
-    override fun getBundledToolVersions() = listOf<InstalledToolVersion>() // myBundledVersions.values
+    override fun getBundledToolVersions() = emptyList<InstalledToolVersion>()
 
     override fun getDefaultBundledVersionId() = null
 
