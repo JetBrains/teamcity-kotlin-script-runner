@@ -28,13 +28,13 @@ class KotlinServerToolProvider(val pluginDescriptor: PluginDescriptor, val archi
 
     override fun getBundledToolVersions() = emptyList<InstalledToolVersion>()
 
-    override fun getDefaultBundledVersionId() = null
+    override fun getDefaultBundledVersionId(): String? = null
 
     override fun getAvailableToolVersions() = myToolVersions.values
 
     override fun tryGetPackageVersion(toolPackage: File): GetPackageVersionResult {
         val zipName = toolPackage.name
-        if (!(zipName.startsWith(KOTLIN_COMPILER_PREFIX) || zipName.endsWith(DOT_ZIP)))
+        if (!(zipName.startsWith(KOTLIN_COMPILER_PREFIX) && zipName.endsWith(DOT_ZIP) && zipName.length > MIN_ZIP_NAME_LEN))
             return GetPackageVersionResult.error("Failed to determine Kotlin version. Make sure the ${zipName} file is a valid Kotlin archive")
 
         val versionNumber = zipName.substring(KOTLIN_COMPILER_PREFIX.length, zipName.length - DOT_ZIP.length)
@@ -88,8 +88,9 @@ class KotlinServerToolProvider(val pluginDescriptor: PluginDescriptor, val archi
 
 
     companion object {
-        val KOTLIN_VERSIONS_SUPPORTED = listOf("1.3.72", "1.4.31").map { KotlinDowloadableToolVersion(it) }
-        val KOTLIN_COMPILER_PREFIX = "kotlin-compiler-"
-        val DOT_ZIP = ".zip"
+        final val KOTLIN_VERSIONS_SUPPORTED = listOf("1.3.72", "1.4.31").map { KotlinDowloadableToolVersion(it) }
+        final val KOTLIN_COMPILER_PREFIX = "kotlin-compiler-"
+        final val DOT_ZIP = ".zip"
+        final val MIN_ZIP_NAME_LEN = KOTLIN_COMPILER_PREFIX.length + DOT_ZIP.length
     }
 }
