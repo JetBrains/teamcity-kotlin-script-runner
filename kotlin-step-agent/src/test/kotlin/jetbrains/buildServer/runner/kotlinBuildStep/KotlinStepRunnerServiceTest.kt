@@ -10,7 +10,6 @@ import org.testng.annotations.BeforeMethod
 import org.testng.annotations.Test
 import java.io.File
 
-@Test
 class KotlinStepRunnerServiceTest {
     @MockK private lateinit var myRunner: BuildRunnerContext
     @MockK private lateinit var myBuild: AgentRunningBuild
@@ -56,6 +55,7 @@ class KotlinStepRunnerServiceTest {
         myTempDir.deleteRecursively()
     }
 
+    @Test
     public fun `simple command line script`() {
         myRunnerParameters[Constants.PARAM_SCRIPT_TYPE] = Constants.SCRIPT_TYPE_CUSTOM
         myRunnerParameters[Constants.PARAM_SCRIPT_CONTENT] = "println(\"Hello!\")"
@@ -67,6 +67,7 @@ class KotlinStepRunnerServiceTest {
                 .endsWith(".main.kts")
     }
 
+    @Test
     public fun `simple command line file`() {
         myRunnerParameters[Constants.PARAM_SCRIPT_TYPE] = Constants.SCRIPT_TYPE_FILE
         myRunnerParameters[Constants.PARAM_SCRIPT_FILE] = "myscript.main.kts"
