@@ -28,7 +28,7 @@ tasks {
 
 tasks.getByName<Test>("test") {
     useTestNG {
-        suites("/src/test/teamcity-pugin-kotlin-step.xml")
+        suites("/src/test/testng-kotlin-step-agent.xml")
     }
 }
 

@@ -9,6 +9,7 @@
     <content url="file://$MODULE_DIR$/../kotlin-step-server">
       <sourceFolder url="file://$MODULE_DIR$/../kotlin-step-server/src/main/kotlin" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/../kotlin-step-server/src/main/resources" type="java-resource" />
+      <sourceFolder url="file://$MODULE_DIR$/../kotlin-step-server/src/test/kotlin" isTestSource="true" />
       <excludeFolder url="file://$MODULE_DIR$/../kotlin-step-server/build" />
     </content>
     <orderEntry type="inheritedJdk" />
@@ -37,5 +38,6 @@
     <orderEntry type="module" module-name="server-tools-api" />
     <orderEntry type="module" module-name="kotlin-step-common" />
     <orderEntry type="module" module-name="server-tools" />
+    <orderEntry type="module" module-name="test-api" scope="TEST" />
   </component>
 </module>

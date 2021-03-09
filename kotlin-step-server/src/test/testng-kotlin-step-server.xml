@@ -1,0 +1,8 @@
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
+<suite name="Tests for Kotlin Steps plugin - server side">
+  <test name="Tests for Kotlin Steps plugin - server side">
+    <classes>
+      <class name="jetbrains.buildServer.runner.kotlinBuildStep.KotlinServerToolProviderTest" />
+    </classes>
+  </test>
+</suite>
