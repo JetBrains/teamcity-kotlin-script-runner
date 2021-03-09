@@ -15,6 +15,9 @@ dependencies {
     compile(project(":kotlin-step-common"))
     provided("org.jetbrains.teamcity:agent-api:${rootProject.extra["teamcityVersion"]}")
     provided("org.jetbrains.teamcity.internal:agent:${rootProject.extra["teamcityVersion"]}")
+    testImplementation("io.mockk:mockk:1.10.0")
+    testImplementation("org.testng:testng:6.8")
+    testImplementation("org.assertj:assertj-core:2.2.0")
 }
 
 tasks {

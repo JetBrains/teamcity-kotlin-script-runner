@@ -2,16 +2,16 @@ package jetbrains.buildServer.runner.kotlinBuildStep
 
 import io.mockk.*
 import io.mockk.impl.annotations.MockK
-import jetbrains.buildServer.BaseTestCase
 import jetbrains.buildServer.agent.*
+import jetbrains.buildServer.util.FileUtil
 import org.assertj.core.api.BDDAssertions.then
-import org.jmock.Expectations
+import org.testng.annotations.AfterMethod
 import org.testng.annotations.BeforeMethod
 import org.testng.annotations.Test
 import java.io.File
 
 @Test
-class KotlinStepRunnerServiceTest: BaseTestCase() {
+class KotlinStepRunnerServiceTest {
     @MockK private lateinit var myRunner: BuildRunnerContext
     @MockK private lateinit var myBuild: AgentRunningBuild
     @MockK private lateinit var myBuildLogger: BuildProgressLogger
@@ -25,12 +25,11 @@ class KotlinStepRunnerServiceTest: BaseTestCase() {
 
     @BeforeMethod
     @Throws(Exception::class)
-    override protected fun setUp() {
-        super.setUp()
+    protected fun setUp() {
         MockKAnnotations.init(this)
         clearAllMocks()
 
-        myTempDir = this.createTempDir()
+        myTempDir = FileUtil.createTempDirectory("kotlinstep", "tmp")
         myRunnerParameters = HashMap<String, String>()
 
 
@@ -51,6 +50,11 @@ class KotlinStepRunnerServiceTest: BaseTestCase() {
         myService = KotlinStepRunnerService()
     }
 
+    @AfterMethod
+    @Throws(Exception::class)
+    protected fun tearDown() {
+        myTempDir.deleteRecursively()
+    }
 
     public fun `simple command line script`() {
         myRunnerParameters[Constants.PARAM_SCRIPT_TYPE] = Constants.SCRIPT_TYPE_CUSTOM
