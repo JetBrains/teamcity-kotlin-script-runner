@@ -66,6 +66,12 @@ teamcity {
     server {
         descriptor = file("../teamcity-plugin.xml")
         tokens = mapOf("Version" to pluginVersion)
+
+        files {
+            into("bundled") {
+                from("$buildDir/bundled")
+            }
+        }
 /*
         files {
             into("kotlin-dsl") {
