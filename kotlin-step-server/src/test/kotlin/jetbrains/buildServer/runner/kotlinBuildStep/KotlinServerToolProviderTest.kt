@@ -1,6 +1,7 @@
 package jetbrains.buildServer.runner.kotlinBuildStep
 
 import jetbrains.buildServer.BaseTestCase
+import jetbrains.buildServer.tools.ToolVersionIdHelper
 import jetbrains.buildServer.util.ArchiveExtractorManager
 import jetbrains.buildServer.util.ArchiveFileSelector
 import jetbrains.buildServer.util.ssl.SSLTrustStoreProvider
@@ -27,8 +28,8 @@ class KotlinServerToolProviderTest: BaseTestCase() {
 
 
     public fun `test tool versions`() {
-        then(provider.defaultBundledVersionId).isNull()
-        then(provider.bundledToolVersions).isEmpty()
+        then(provider.defaultBundledVersionId).isEqualTo(ToolVersionIdHelper.getToolId(KotlinToolType.INSTANCE, "1.4.31"))
+        then(provider.bundledToolVersions.map { it.version }).isEqualTo(listOf("1.4.31"))
         then(provider.availableToolVersions).isNotEmpty()
     }
 

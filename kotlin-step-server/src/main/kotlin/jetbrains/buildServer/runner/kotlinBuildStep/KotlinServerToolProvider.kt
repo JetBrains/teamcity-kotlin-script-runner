@@ -1,7 +1,5 @@
 package jetbrains.buildServer.runner.kotlinBuildStep
 
-import jetbrains.buildServer.DevelopmentMode
-import jetbrains.buildServer.log.Loggers
 import jetbrains.buildServer.plugins.files.JarSearcherBase
 import jetbrains.buildServer.tools.*
 import jetbrains.buildServer.tools.utils.URLDownloader
@@ -13,6 +11,7 @@ import jetbrains.buildServer.util.ssl.SSLTrustStoreProvider
 import jetbrains.buildServer.web.openapi.PluginDescriptor
 import java.io.File
 import java.io.IOException
+import java.nio.file.Path
 
 class KotlinServerToolProvider(val pluginDescriptor: PluginDescriptor, val archiveManager: ArchiveExtractorManager, val sslTrustStoreProvider: SSLTrustStoreProvider):
         ServerToolProviderAdapter() {
@@ -26,9 +25,18 @@ class KotlinServerToolProvider(val pluginDescriptor: PluginDescriptor, val archi
 
     override fun getType(): ToolType = KotlinToolType.INSTANCE
 
-    override fun getBundledToolVersions() = emptyList<InstalledToolVersion>()
+    override fun getBundledToolVersions(): Collection<InstalledToolVersion> {
+        val pluginRoot: Path = pluginDescriptor.pluginRoot.toPath()
+        return KOTLIN_VERSION_NUMBERS_BUNDLED.map {
+            val path = pluginRoot.resolve("bundled").resolve(getType().type + "-" + it + ".zip")
+            SimpleInstalledToolVersion(
+                    SimpleToolVersion(getType(), it, ToolVersionIdHelper.getToolId(KotlinToolType.INSTANCE, it)),
+                    null, null, path.toFile())
+        }
+    }
 
-    override fun getDefaultBundledVersionId(): String? = null
+    override fun getDefaultBundledVersionId(): String?
+    =  ToolVersionIdHelper.getToolId(KotlinToolType.INSTANCE, KOTLIN_VERSION_NUMBERS_BUNDLED.get(0))
 
     override fun getAvailableToolVersions() = myToolVersions.values
 
@@ -89,6 +97,7 @@ class KotlinServerToolProvider(val pluginDescriptor: PluginDescriptor, val archi
 
     companion object {
         final val KOTLIN_VERSIONS_SUPPORTED = listOf("1.3.72", "1.4.31").map { KotlinDowloadableToolVersion(it) }
+        final val KOTLIN_VERSION_NUMBERS_BUNDLED = listOf("1.4.31")
         final val KOTLIN_COMPILER_PREFIX = "kotlin-compiler-"
         final val DOT_ZIP = ".zip"
         final val MIN_ZIP_NAME_LEN = KOTLIN_COMPILER_PREFIX.length + DOT_ZIP.length
