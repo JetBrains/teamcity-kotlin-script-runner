@@ -22,8 +22,14 @@ dependencies {
 }
 
 tasks {
+    register<DownloadKotlinTask>("downloadBundled") {
+        version = "1.4.31"
+        outputDir.set(File("$buildDir/bundled"))
+    }
+
     compileKotlin {
         kotlinOptions.jvmTarget = "1.8"
+        dependsOn(named("downloadBundled"))
     }
     compileTestKotlin {
         kotlinOptions.jvmTarget = "1.8"
@@ -33,6 +39,23 @@ tasks {
 tasks.getByName<Test>("test") {
     useTestNG {
         suites("/src/test/testng-kotlin-step-server.xml")
+    }
+}
+
+abstract class DownloadKotlinTask : DefaultTask() {
+    @get:Input
+    abstract var version: String
+
+    @get:OutputDirectory
+    abstract val outputDir: DirectoryProperty
+
+    @TaskAction
+    fun download() {
+        val destFile = outputDir.file("kotlin-compiler-${version}.zip").get().asFile
+        if (!destFile.exists()) {
+            val url = "https://github.com/JetBrains/kotlin/releases/download/v${version}/kotlin-compiler-${version}.zip"
+            ant.invokeMethod("get", mapOf("src" to url, "dest" to destFile))
+        }
     }
 }
 
