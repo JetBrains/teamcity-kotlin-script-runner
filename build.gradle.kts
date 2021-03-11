@@ -1,3 +1,6 @@
+import java.text.SimpleDateFormat
+import java.util.Date
+
 plugins {
     kotlin("jvm") version "1.4.21" apply false
 }
@@ -13,7 +16,9 @@ allprojects {
     }
 }
 
-extra["pluginVersion"] = "${if (project.hasProperty("PluginVersion")) project.property("PluginVersion") else "SNAPSHOT"}"
+val timestamp = SimpleDateFormat("yyMMdd_HHmm").format(Date())
+
+extra["pluginVersion"] = "${if (project.hasProperty("PluginVersion")) project.property("PluginVersion") else "SNAPSHOT_${timestamp}"}"
 version = extra["pluginVersion"]
 
 extra["teamcityVersion"] = project.findProperty("teamcityVersion") ?: "2021.1-SNAPSHOT"
