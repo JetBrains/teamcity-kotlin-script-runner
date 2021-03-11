@@ -9,7 +9,7 @@
 
 <props:workingDirectory />
 
-<jsp:include page="/tools/editToolUsage.html?toolType=kotlin&versionParameterName=kotlin.path&class=longField"/>
+<jsp:include page="/tools/editToolUsage.html?toolType=kotlin-compiler&versionParameterName=kotlin.path&class=longField"/>
 
 <props:selectSectionProperty name="scriptType" title="Script Type">
 

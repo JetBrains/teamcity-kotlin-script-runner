@@ -6,6 +6,7 @@ plugins {
 
 group = "org.jetbrains.teamcity"
 
+val BUNDLED_TOOL_VERSION = "1.4.31"
 val pluginVersion = rootProject.extra["pluginVersion"]
 version = pluginVersion
 
@@ -23,13 +24,28 @@ dependencies {
 
 tasks {
     register<DownloadKotlinTask>("downloadBundled") {
-        version = "1.4.31"
-        outputDir.set(File("$buildDir/bundled"))
+        toolVersion = BUNDLED_TOOL_VERSION
+        outputDir.set(File("$buildDir/bundled-download"))
+    }
+
+    register<Zip>("includeToolDef") {
+        archiveFileName.set("kotlin-compiler.$BUNDLED_TOOL_VERSION.zip")
+        destinationDirectory.set(file("$buildDir/bundled"))
+
+        from(zipTree("$buildDir/bundled-download/kotlin-compiler-$BUNDLED_TOOL_VERSION.zip")) {
+            include("kotlinc/**")
+            eachFile {
+                relativePath = RelativePath(true, *relativePath.segments.drop(1).toTypedArray())
+            }
+            includeEmptyDirs = false
+        }
+        from("tools/teamcity-plugin.xml")
+        dependsOn(named("downloadBundled"))
     }
 
     compileKotlin {
         kotlinOptions.jvmTarget = "1.8"
-        dependsOn(named("downloadBundled"))
+        dependsOn(named("includeToolDef"))
     }
     compileTestKotlin {
         kotlinOptions.jvmTarget = "1.8"
@@ -44,16 +60,16 @@ tasks.getByName<Test>("test") {
 
 abstract class DownloadKotlinTask : DefaultTask() {
     @get:Input
-    abstract var version: String
+    abstract var toolVersion: String
 
     @get:OutputDirectory
     abstract val outputDir: DirectoryProperty
 
     @TaskAction
     fun download() {
-        val destFile = outputDir.file("kotlin-compiler-${version}.zip").get().asFile
+        val destFile = outputDir.file("kotlin-compiler-$toolVersion.zip").get().asFile
         if (!destFile.exists()) {
-            val url = "https://github.com/JetBrains/kotlin/releases/download/v${version}/kotlin-compiler-${version}.zip"
+            val url = "https://github.com/JetBrains/kotlin/releases/download/v$toolVersion/kotlin-compiler-$toolVersion.zip"
             ant.invokeMethod("get", mapOf("src" to url, "dest" to destFile))
         }
     }

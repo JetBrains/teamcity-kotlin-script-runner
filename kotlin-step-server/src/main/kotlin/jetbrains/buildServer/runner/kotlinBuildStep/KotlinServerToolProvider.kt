@@ -23,9 +23,10 @@ class KotlinServerToolProvider(val pluginDescriptor: PluginDescriptor, val archi
         KOTLIN_VERSIONS_SUPPORTED.forEach { toolVersions.put(it.id, it) }
         val pluginRoot: Path = pluginDescriptor.pluginRoot.toPath()
         KOTLIN_VERSION_NUMBERS_BUNDLED.map {
-            val path = pluginRoot.resolve("bundled").resolve(getToolFileName(it))
+            val toolId = ToolVersionIdHelper.getToolId(KotlinToolType.INSTANCE, it)
+            val path = pluginRoot.resolve("bundled").resolve(toolId + DOT_ZIP)
             SimpleInstalledToolVersion(
-                    SimpleToolVersion(getType(), it, ToolVersionIdHelper.getToolId(KotlinToolType.INSTANCE, it)),
+                    SimpleToolVersion(getType(), it, toolId),
                     null, null, path.toFile())
         }.forEach { bundledVersions.put(it.id, it) }
     }

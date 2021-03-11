@@ -50,8 +50,8 @@ class KotlinServerToolProviderTest: BaseTestCase() {
     public fun `parse version`() {
         val result = provider.tryGetPackageVersion(File("kotlin-compiler-1.4.31.zip"))
         then(result.toolVersion).isNotNull()
-        then(result.toolVersion!!.id).isEqualTo("kotlin.1.4.31")
-        then(result.toolVersion!!.displayName).isEqualTo("Kotlin 1.4.31")
+        then(result.toolVersion!!.id).isEqualTo("kotlin-compiler.1.4.31")
+        then(result.toolVersion!!.displayName).isEqualTo("Kotlin compiler 1.4.31")
         then(result.toolVersion!!.type).isEqualTo(KotlinToolType.INSTANCE)
     }
 
