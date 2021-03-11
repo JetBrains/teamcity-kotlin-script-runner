@@ -8,7 +8,7 @@ import jetbrains.buildServer.tools.available.DownloadableToolVersion
 class KotlinDowloadableToolVersion(val versionNumber: String): DownloadableToolVersion,
         SimpleToolVersion(KotlinToolType.INSTANCE, versionNumber,
                 ToolVersionIdHelper.getToolId(KotlinToolType.INSTANCE, versionNumber),
-                "${KotlinToolType.INSTANCE.displayName} $versionNumber"
+                "${Constants.TOOL_DISPLAY_NAME} $versionNumber"
         ) {
 
     override fun getDownloadUrl() = "https://github.com/JetBrains/kotlin/releases/download/v${version}/kotlin-compiler-${version}.zip"

@@ -1,19 +1,16 @@
 package jetbrains.buildServer.runner.kotlinBuildStep
 
 import jetbrains.buildServer.agent.*
+import jetbrains.buildServer.runner.kotlinBuildStep.Constants.TOOL_TYPE
 import java.io.File
 
 class KotlinToolProvider(toolProvidersRegistry: ToolProvidersRegistry, agentConfiguration: BuildAgentConfiguration) {
-
-    companion object {
-        const val TOOL_NAME = "kotlin"
-    }
 
     init {
         toolProvidersRegistry.registerToolProvider(object : ToolProvider {
 
             override fun supports(toolName: String): Boolean {
-                return TOOL_NAME == toolName
+                return TOOL_TYPE == toolName
             }
 
             @Throws(ToolCannotBeFoundException::class)

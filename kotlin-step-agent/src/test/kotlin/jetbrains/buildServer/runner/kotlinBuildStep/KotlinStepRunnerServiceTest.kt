@@ -39,7 +39,7 @@ class KotlinStepRunnerServiceTest {
         every { flowLogger.startFlow() } just Runs
         every { runnerContext.runnerParameters } returns runnerParameters
         every { runnerContext.buildParameters } returns buildParameters
-        every { runnerContext.getToolPath(KotlinToolProvider.TOOL_NAME) } returns "path/to/kotlin"
+        every { runnerContext.getToolPath(Constants.TOOL_TYPE) } returns "path/to/kotlin"
         every { runnerContext.isVirtualContext } returns false
         every { runnerContext.workingDirectory } returns tempDir
         every { buildParameters.allParameters } returns emptyMap<String, String>()

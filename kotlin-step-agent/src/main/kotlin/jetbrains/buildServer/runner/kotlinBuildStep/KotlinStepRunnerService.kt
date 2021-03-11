@@ -20,7 +20,7 @@ class KotlinStepRunnerService: BuildServiceAdapter() {
     }
 
     protected fun createCommandLine(script: String): ProgramCommandLine {
-        val lib = File(getToolPath(KotlinToolProvider.TOOL_NAME), LIB_DIR)
+        val lib = File(getToolPath(Constants.TOOL_TYPE), LIB_DIR)
         return JavaCommandLineBuilder()
                 .withJavaHome(getRunnerParameters().get(JavaRunnerConstants.TARGET_JDK_HOME), getRunnerContext().isVirtualContext())
                 .withBaseDir(getCheckoutDirectory().getAbsolutePath())

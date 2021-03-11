@@ -4,6 +4,9 @@ object Constants {
 
     val RUNNER_TYPE = "kotlinScript"
 
+    val TOOL_TYPE = "kotlin-compiler"
+    val TOOL_DISPLAY_NAME = "Kotlin compiler"
+
     val PARAM_SCRIPT_TYPE = "scriptType"
     val PARAM_SCRIPT_CONTENT = "script.content"
     val PARAM_SCRIPT_FILE = "script.file"
