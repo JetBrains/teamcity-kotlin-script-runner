@@ -2,6 +2,7 @@ package jetbrains.buildServer.runner.kotlinBuildStep
 
 
 import jetbrains.buildServer.RunBuildException
+import jetbrains.buildServer.agent.ToolCannotBeFoundException
 import jetbrains.buildServer.agent.runner.BuildServiceAdapter
 import jetbrains.buildServer.agent.runner.JavaCommandLineBuilder
 import jetbrains.buildServer.agent.runner.JavaRunnerUtil
@@ -20,7 +21,7 @@ class KotlinStepRunnerService: BuildServiceAdapter() {
     }
 
     protected fun createCommandLine(script: String): ProgramCommandLine {
-        val lib = File(getToolPath(Constants.TOOL_TYPE), LIB_DIR)
+        val lib = File(getToolPath(), LIB_DIR)
         return JavaCommandLineBuilder()
                 .withJavaHome(getRunnerParameters().get(JavaRunnerConstants.TARGET_JDK_HOME), getRunnerContext().isVirtualContext())
                 .withBaseDir(getCheckoutDirectory().getAbsolutePath())
@@ -31,6 +32,11 @@ class KotlinStepRunnerService: BuildServiceAdapter() {
                 .withProgramArgs(getProgramArgs(script, lib))
                 .withWorkingDir(getWorkingDirectory().getAbsolutePath())
                 .build()
+    }
+
+    private fun getToolPath(): String {
+        return runnerParameters[Constants.PARAM_KOTLIN_PATH]
+                ?: throw ToolCannotBeFoundException("Kotlin compiler tool path is missing in the runner settings")
     }
 
     private fun getProgramArgs(script: String, lib: File): List<String> {

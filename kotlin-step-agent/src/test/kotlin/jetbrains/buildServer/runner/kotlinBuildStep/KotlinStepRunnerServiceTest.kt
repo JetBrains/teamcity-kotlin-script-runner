@@ -59,6 +59,7 @@ class KotlinStepRunnerServiceTest {
     public fun `simple command line script`() {
         runnerParameters[Constants.PARAM_SCRIPT_TYPE] = Constants.SCRIPT_TYPE_CUSTOM
         runnerParameters[Constants.PARAM_SCRIPT_CONTENT] = "println(\"Hello!\")"
+        runnerParameters[Constants.PARAM_KOTLIN_PATH] = "path/to/kotlin"
         runnerService.initialize(build, runnerContext)
         val commandLine = runnerService.makeProgramCommandLine()
         then(commandLine.executablePath).containsIgnoringCase("java")
@@ -71,6 +72,7 @@ class KotlinStepRunnerServiceTest {
     public fun `simple command line file`() {
         runnerParameters[Constants.PARAM_SCRIPT_TYPE] = Constants.SCRIPT_TYPE_FILE
         runnerParameters[Constants.PARAM_SCRIPT_FILE] = "myscript.main.kts"
+        runnerParameters[Constants.PARAM_KOTLIN_PATH] = "path/to/kotlin"
         runnerService.initialize(build, runnerContext)
         val commandLine = runnerService.makeProgramCommandLine()
         then(commandLine.executablePath).containsIgnoringCase("java")

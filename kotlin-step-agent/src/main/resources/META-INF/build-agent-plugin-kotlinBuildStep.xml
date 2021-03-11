@@ -13,5 +13,4 @@
     >
   <bean id="kotlinStepRunnerInfo" class="jetbrains.buildServer.runner.kotlinBuildStep.KotlinStepBuildRunnerInfo"/>
   <bean id="kotlinStepRunnerFactory" class="jetbrains.buildServer.runner.kotlinBuildStep.KotlinStepRunnerFactory"/>
-  <bean id="kotlinToolProvider" class="jetbrains.buildServer.runner.kotlinBuildStep.KotlinToolProvider"/>
 </beans>
