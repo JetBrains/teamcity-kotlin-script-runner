@@ -5,12 +5,10 @@ import jetbrains.buildServer.serverSide.RunType
 import jetbrains.buildServer.serverSide.RunTypeRegistry
 import jetbrains.buildServer.web.openapi.PluginDescriptor
 
-class KotlinScriptRunType(runTypeRegistry: RunTypeRegistry, pluginDescriptor: PluginDescriptor) : RunType() {
-    private val myPluginDescriptor: PluginDescriptor
+class KotlinScriptRunType(val pluginDescriptor: PluginDescriptor, runTypeRegistry: RunTypeRegistry) : RunType() {
 
     init {
         runTypeRegistry.registerRunType(this)
-        myPluginDescriptor = pluginDescriptor
     }
 
     override fun getType(): String {
@@ -30,11 +28,11 @@ class KotlinScriptRunType(runTypeRegistry: RunTypeRegistry, pluginDescriptor: Pl
     }
 
     override fun getEditRunnerParamsJspFilePath(): String? {
-        return myPluginDescriptor.getPluginResourcesPath("kotlinScriptRunnerParams.jsp")
+        return pluginDescriptor.getPluginResourcesPath("kotlinScriptRunnerParams.jsp")
     }
 
     override fun getViewRunnerParamsJspFilePath(): String? {
-        return myPluginDescriptor.getPluginResourcesPath("viewKotlinScriptRunnerParams.jsp")
+        return pluginDescriptor.getPluginResourcesPath("viewKotlinScriptRunnerParams.jsp")
     }
 
     override fun getDefaultRunnerProperties(): Map<String, String>? {

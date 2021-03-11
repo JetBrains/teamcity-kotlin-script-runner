@@ -16,29 +16,29 @@ import java.nio.file.Path
 class KotlinServerToolProvider(val pluginDescriptor: PluginDescriptor, val archiveManager: ArchiveExtractorManager, val sslTrustStoreProvider: SSLTrustStoreProvider):
         ServerToolProviderAdapter() {
 
-    private val myBundledVersions = hashMapOf<String, InstalledToolVersion>()
-    private val myToolVersions = hashMapOf<String, KotlinDowloadableToolVersion>()
+    private val bundledVersions = hashMapOf<String, InstalledToolVersion>()
+    private val toolVersions = hashMapOf<String, KotlinDowloadableToolVersion>()
 
     init {
-        KOTLIN_VERSIONS_SUPPORTED.forEach { myToolVersions.put(it.id, it) }
+        KOTLIN_VERSIONS_SUPPORTED.forEach { toolVersions.put(it.id, it) }
         val pluginRoot: Path = pluginDescriptor.pluginRoot.toPath()
         KOTLIN_VERSION_NUMBERS_BUNDLED.map {
             val path = pluginRoot.resolve("bundled").resolve(getToolFileName(it))
             SimpleInstalledToolVersion(
                     SimpleToolVersion(getType(), it, ToolVersionIdHelper.getToolId(KotlinToolType.INSTANCE, it)),
                     null, null, path.toFile())
-        }.forEach { myBundledVersions.put(it.id, it) }
+        }.forEach { bundledVersions.put(it.id, it) }
     }
 
     override fun getType(): ToolType = KotlinToolType.INSTANCE
 
-    override fun getBundledToolVersions() = myBundledVersions.values
+    override fun getBundledToolVersions() = bundledVersions.values
 
     override fun getDefaultBundledVersionId(): String?
         = if(KOTLIN_VERSION_NUMBERS_BUNDLED.isEmpty()) null
         else ToolVersionIdHelper.getToolId(KotlinToolType.INSTANCE, KOTLIN_VERSION_NUMBERS_BUNDLED.get(0))
 
-    override fun getAvailableToolVersions() = myToolVersions.values
+    override fun getAvailableToolVersions() = toolVersions.values
 
     override fun tryGetPackageVersion(toolPackage: File): GetPackageVersionResult {
         val zipName = toolPackage.name
@@ -47,7 +47,7 @@ class KotlinServerToolProvider(val pluginDescriptor: PluginDescriptor, val archi
 
         val versionNumber = zipName.substring(KOTLIN_COMPILER_PREFIX.length, zipName.length - DOT_ZIP.length)
         val toolId = ToolVersionIdHelper.getToolId(KotlinToolType.INSTANCE, versionNumber)
-        val toolVersion = myToolVersions.get(toolId)
+        val toolVersion = toolVersions.get(toolId)
 
         return if (toolVersion == null)
             GetPackageVersionResult.error("Failed to determine Kotlin version for tool id ${toolId}")
@@ -57,7 +57,7 @@ class KotlinServerToolProvider(val pluginDescriptor: PluginDescriptor, val archi
 
     @Throws(ToolException::class)
     override fun fetchToolPackage(toolVersion: ToolVersion, targetDirectory: File): File {
-        val dowloadableVersion = myToolVersions.get(toolVersion.id)
+        val dowloadableVersion = toolVersions.get(toolVersion.id)
         if (dowloadableVersion == null)
             throw ToolException("Tool version ${toolVersion.id} not found")
         val location = File(targetDirectory, dowloadableVersion.getDestinationFileName())
