@@ -21,22 +21,22 @@ class KotlinServerToolProvider(val pluginDescriptor: PluginDescriptor, val archi
 
     init {
         KOTLIN_VERSIONS_SUPPORTED.forEach { myToolVersions.put(it.id, it) }
+        val pluginRoot: Path = pluginDescriptor.pluginRoot.toPath()
+        KOTLIN_VERSION_NUMBERS_BUNDLED.map {
+            val path = pluginRoot.resolve("bundled").resolve(getToolFileName(it))
+            SimpleInstalledToolVersion(
+                    SimpleToolVersion(getType(), it, ToolVersionIdHelper.getToolId(KotlinToolType.INSTANCE, it)),
+                    null, null, path.toFile())
+        }.forEach { myBundledVersions.put(it.id, it) }
     }
 
     override fun getType(): ToolType = KotlinToolType.INSTANCE
 
-    override fun getBundledToolVersions(): Collection<InstalledToolVersion> {
-        val pluginRoot: Path = pluginDescriptor.pluginRoot.toPath()
-        return KOTLIN_VERSION_NUMBERS_BUNDLED.map {
-            val path = pluginRoot.resolve("bundled").resolve(getType().type + "-" + it + ".zip")
-            SimpleInstalledToolVersion(
-                    SimpleToolVersion(getType(), it, ToolVersionIdHelper.getToolId(KotlinToolType.INSTANCE, it)),
-                    null, null, path.toFile())
-        }
-    }
+    override fun getBundledToolVersions() = myBundledVersions.values
 
     override fun getDefaultBundledVersionId(): String?
-    =  ToolVersionIdHelper.getToolId(KotlinToolType.INSTANCE, KOTLIN_VERSION_NUMBERS_BUNDLED.get(0))
+        = if(KOTLIN_VERSION_NUMBERS_BUNDLED.isEmpty()) null
+        else ToolVersionIdHelper.getToolId(KotlinToolType.INSTANCE, KOTLIN_VERSION_NUMBERS_BUNDLED.get(0))
 
     override fun getAvailableToolVersions() = myToolVersions.values
 
@@ -101,5 +101,6 @@ class KotlinServerToolProvider(val pluginDescriptor: PluginDescriptor, val archi
         final val KOTLIN_COMPILER_PREFIX = "kotlin-compiler-"
         final val DOT_ZIP = ".zip"
         final val MIN_ZIP_NAME_LEN = KOTLIN_COMPILER_PREFIX.length + DOT_ZIP.length
+        fun getToolFileName(version: String): String = KOTLIN_COMPILER_PREFIX + version + DOT_ZIP
     }
 }

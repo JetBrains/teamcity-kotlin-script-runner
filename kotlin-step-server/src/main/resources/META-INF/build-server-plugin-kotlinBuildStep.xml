@@ -5,5 +5,5 @@
        default-autowire="constructor">
   <bean id="kotlinScriptRunType" class="jetbrains.buildServer.runner.kotlinBuildStep.KotlinScriptRunType"/>
   <bean id="kotlinServerToolProvider" class="jetbrains.buildServer.runner.kotlinBuildStep.KotlinServerToolProvider"/>
-  <bean id="kotlinToolUsageProvider" class="jetbrains.buildServer.runner.kotlinBuildStep.KotlinToolUsagesProvider"/>
+  <bean id="kotlinToolPreprocessor" class="jetbrains.buildServer.runner.kotlinBuildStep.KotlinToolPreProcessor" />
 </beans>
