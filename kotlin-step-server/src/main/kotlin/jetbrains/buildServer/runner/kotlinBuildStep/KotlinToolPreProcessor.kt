@@ -10,13 +10,13 @@ class KotlinToolPreProcessor(val pluginDescriptor: PluginDescriptor, val toolPat
     override fun getName() = KotlinToolType.INSTANCE.type
 
     override fun doBeforeServerStartup() {
-        for (version in KotlinServerToolProvider.KOTLIN_VERSION_NUMBERS_BUNDLED) {
-            val fileName = KotlinServerToolProvider.getToolFileName(version)
+        for (version in KOTLIN_VERSION_NUMBERS_BUNDLED) {
+            val fileName = getToolFileName(version)
             val destination = toolPaths.getSharedToolPath(fileName)
             if (destination.exists())
                 continue
             val pluginRoot: Path = pluginDescriptor.pluginRoot.toPath()
-            val source = pluginRoot.resolve("bundled").resolve(KotlinServerToolProvider.getToolFileName(version)).toFile()
+            val source = pluginRoot.resolve("bundled").resolve(fileName).toFile()
             if (!source.exists()) {
                 SERVER_LOG.warn("Missing bundled tool at ${source.canonicalPath}")
                 continue

@@ -93,14 +93,4 @@ class KotlinServerToolProvider(val pluginDescriptor: PluginDescriptor, val archi
                     </teamcity-agent-plugin>
                 """.trimIndent(), "UTF-8")
     }
-
-
-    companion object {
-        final val KOTLIN_VERSIONS_SUPPORTED = listOf("1.3.72", "1.4.31").map { KotlinDowloadableToolVersion(it) }
-        final val KOTLIN_VERSION_NUMBERS_BUNDLED = listOf("1.4.31")
-        final val KOTLIN_COMPILER_PREFIX = "kotlin-compiler-"
-        final val DOT_ZIP = ".zip"
-        final val MIN_ZIP_NAME_LEN = KOTLIN_COMPILER_PREFIX.length + DOT_ZIP.length
-        fun getToolFileName(version: String): String = KOTLIN_COMPILER_PREFIX + version + DOT_ZIP
-    }
 }
