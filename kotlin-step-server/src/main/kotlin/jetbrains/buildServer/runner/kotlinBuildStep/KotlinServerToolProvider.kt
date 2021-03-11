@@ -35,9 +35,7 @@ class KotlinServerToolProvider(val pluginDescriptor: PluginDescriptor, val archi
 
     override fun getBundledToolVersions() = bundledVersions.values
 
-    override fun getDefaultBundledVersionId(): String?
-        = if(KOTLIN_VERSION_NUMBERS_BUNDLED.isEmpty()) null
-        else ToolVersionIdHelper.getToolId(KotlinToolType.INSTANCE, KOTLIN_VERSION_NUMBERS_BUNDLED.get(0))
+    override fun getDefaultBundledVersionId() = KOTLIN_DEFAULT_VERSION_NUMBER
 
     override fun getAvailableToolVersions() = toolVersions.values
 
