@@ -16,24 +16,26 @@ import java.nio.file.Path
 class KotlinServerToolProvider(val pluginDescriptor: PluginDescriptor, val archiveManager: ArchiveExtractorManager, val sslTrustStoreProvider: SSLTrustStoreProvider):
         ServerToolProviderAdapter() {
 
-    private val bundledVersions = hashMapOf<String, InstalledToolVersion>()
-    private val toolVersions = hashMapOf<String, KotlinDowloadableToolVersion>()
+    private val toolVersions by lazy {
+        KOTLIN_VERSIONS_SUPPORTED
+                .map { KotlinDowloadableToolVersion(it) }
+                .map { it.id to it }.toMap()
+    }
 
-    init {
-        KOTLIN_VERSIONS_SUPPORTED.forEach { toolVersions.put(it.id, it) }
-        val pluginRoot: Path = pluginDescriptor.pluginRoot.toPath()
+    private val bundledVersions by lazy {
+        val pluginRoot = pluginDescriptor.pluginRoot.toPath()
         KOTLIN_VERSION_NUMBERS_BUNDLED.map {
             val toolId = ToolVersionIdHelper.getToolId(KotlinToolType.INSTANCE, it)
             val path = pluginRoot.resolve("bundled").resolve(toolId + DOT_ZIP)
             SimpleInstalledToolVersion(
                     SimpleToolVersion(getType(), it, toolId),
                     null, null, path.toFile())
-        }.forEach { bundledVersions.put(it.id, it) }
+        }
     }
 
     override fun getType(): ToolType = KotlinToolType.INSTANCE
 
-    override fun getBundledToolVersions() = bundledVersions.values
+    override fun getBundledToolVersions() = bundledVersions
 
     override fun getDefaultBundledVersionId() = KOTLIN_DEFAULT_VERSION_NUMBER
 
