@@ -77,9 +77,9 @@ class KotlinServerToolProvider(val pluginDescriptor: PluginDescriptor, val archi
             })
             writeToolDescriptor(File(targetDirectory, JarSearcherBase.TEAMCITY_PLUGIN_XML))
         } catch (e: IOException) {
-            throw ToolException("Error while unpacking the Maven distribution: $e", e)
+            throw ToolException("Error while unpacking a Kotlin compiler distribution: $e", e)
         } catch (e: UnsupportedArchiveTypeException) {
-            throw ToolException("Unsupported archive format when trying to extract Maven tool from [" + toolPackage.absolutePath + "]", e)
+            throw ToolException("Unsupported archive format when trying to extract a Kotlin compiler tool from [" + toolPackage.absolutePath + "]", e)
         }
     }
 
