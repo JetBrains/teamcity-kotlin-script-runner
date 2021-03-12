@@ -35,7 +35,7 @@ class KotlinStepRunnerService: BuildServiceAdapter() {
     }
 
     private fun getToolPath(): String {
-        return runnerParameters[Constants.PARAM_KOTLIN_PATH]
+        return runnerParameters[RunnerParamNames.KOTLIN_PATH]
                 ?: throw ToolCannotBeFoundException("Kotlin compiler tool path is missing in the runner settings")
     }
 
@@ -54,9 +54,9 @@ class KotlinStepRunnerService: BuildServiceAdapter() {
 
 
     private fun getOrCreateScript(): String {
-        val scriptType = runnerParameters[Constants.PARAM_SCRIPT_TYPE]
-        val scriptFile = if (scriptType.equals(Constants.SCRIPT_TYPE_FILE)) {
-            val scriptFileName = runnerParameters[Constants.PARAM_SCRIPT_FILE]
+        val scriptType = runnerParameters[RunnerParamNames.SCRIPT_TYPE]
+        val scriptFile = if (scriptType.equals(ScriptTypes.FILE)) {
+            val scriptFileName = runnerParameters[RunnerParamNames.SCRIPT_FILE]
             if (scriptFileName == null || scriptFileName.isEmpty())
                 throw IllegalArgumentException("No script file name provided")
             File(checkoutDirectory, scriptFileName)
@@ -72,7 +72,7 @@ class KotlinStepRunnerService: BuildServiceAdapter() {
     }
 
     protected fun getScriptContent(): String {
-        return getRunnerContext().getRunnerParameters().get(Constants.PARAM_SCRIPT_CONTENT)
+        return getRunnerContext().getRunnerParameters().get(RunnerParamNames.SCRIPT_CONTENT)
                 ?: throw RunBuildException("Kotlin script content is not specified")
     }
 }

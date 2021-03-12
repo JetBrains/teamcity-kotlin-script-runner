@@ -39,7 +39,7 @@ class KotlinStepRunnerServiceTest {
         every { flowLogger.startFlow() } just Runs
         every { runnerContext.runnerParameters } returns runnerParameters
         every { runnerContext.buildParameters } returns buildParameters
-        every { runnerContext.getToolPath(Constants.TOOL_TYPE) } returns "path/to/kotlin"
+        every { runnerContext.getToolPath(KOTLIN_COMPILER_TOOL_TYPE) } returns "path/to/kotlin"
         every { runnerContext.isVirtualContext } returns false
         every { runnerContext.workingDirectory } returns tempDir
         every { buildParameters.allParameters } returns emptyMap<String, String>()
@@ -57,9 +57,9 @@ class KotlinStepRunnerServiceTest {
 
     @Test
     public fun `simple command line script`() {
-        runnerParameters[Constants.PARAM_SCRIPT_TYPE] = Constants.SCRIPT_TYPE_CUSTOM
-        runnerParameters[Constants.PARAM_SCRIPT_CONTENT] = "println(\"Hello!\")"
-        runnerParameters[Constants.PARAM_KOTLIN_PATH] = "path/to/kotlin"
+        runnerParameters[RunnerParamNames.SCRIPT_TYPE] = ScriptTypes.CUSTOM
+        runnerParameters[RunnerParamNames.SCRIPT_CONTENT] = "println(\"Hello!\")"
+        runnerParameters[RunnerParamNames.KOTLIN_PATH] = "path/to/kotlin"
         runnerService.initialize(build, runnerContext)
         val commandLine = runnerService.makeProgramCommandLine()
         then(commandLine.executablePath).containsIgnoringCase("java")
@@ -70,9 +70,9 @@ class KotlinStepRunnerServiceTest {
 
     @Test
     public fun `simple command line file`() {
-        runnerParameters[Constants.PARAM_SCRIPT_TYPE] = Constants.SCRIPT_TYPE_FILE
-        runnerParameters[Constants.PARAM_SCRIPT_FILE] = "myscript.main.kts"
-        runnerParameters[Constants.PARAM_KOTLIN_PATH] = "path/to/kotlin"
+        runnerParameters[RunnerParamNames.SCRIPT_TYPE] = ScriptTypes.FILE
+        runnerParameters[RunnerParamNames.SCRIPT_FILE] = "myscript.main.kts"
+        runnerParameters[RunnerParamNames.KOTLIN_PATH] = "path/to/kotlin"
         runnerService.initialize(build, runnerContext)
         val commandLine = runnerService.makeProgramCommandLine()
         then(commandLine.executablePath).containsIgnoringCase("java")

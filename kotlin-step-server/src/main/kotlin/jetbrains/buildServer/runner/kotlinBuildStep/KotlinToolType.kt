@@ -4,8 +4,8 @@ import jetbrains.buildServer.tools.ToolTypeAdapter
 
 class KotlinToolType: ToolTypeAdapter() {
 
-    override fun getType() = Constants.TOOL_TYPE
-    override fun getDisplayName() = Constants.TOOL_DISPLAY_NAME
+    override fun getType() = KOTLIN_COMPILER_TOOL_TYPE
+    override fun getDisplayName() = KOTLIN_COMPILER_TOOL_DISPLAY_NAME
 
     override fun isSupportDownload() = true
 
