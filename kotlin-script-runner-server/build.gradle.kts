@@ -15,8 +15,8 @@ repositories {
 }
 
 dependencies {
-    agent(project(path = ":kotlin-step-agent", configuration = "plugin"))
-    compile(project(":kotlin-step-common"))
+    agent(project(path = ":kotlin-script-runner-agent", configuration = "plugin"))
+    compile(project(":kotlin-script-runner-common"))
     compile(kotlin("stdlib"))
     provided("org.jetbrains.teamcity.internal:server:${rootProject.extra["teamcityVersion"]}")
     provided("org.jetbrains.teamcity.internal:server-tools:${rootProject.extra["teamcityVersion"]}")
@@ -54,7 +54,7 @@ tasks {
 
 tasks.getByName<Test>("test") {
     useTestNG {
-        suites("/src/test/testng-kotlin-step-server.xml")
+        suites("/src/test/testng-kotlin-script-runner-server.xml")
     }
 }
 

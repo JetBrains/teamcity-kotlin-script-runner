@@ -6,11 +6,11 @@
     </facet>
   </component>
   <component name="NewModuleRootManager" LANGUAGE_LEVEL="JDK_1_8" inherit-compiler-output="true">
-    <content url="file://$MODULE_DIR$/../kotlin-step-agent">
-      <sourceFolder url="file://$MODULE_DIR$/../kotlin-step-agent/src/main/kotlin" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/../kotlin-step-agent/src/main/resources" type="java-resource" />
-      <sourceFolder url="file://$MODULE_DIR$/../kotlin-step-agent/src/test/kotlin" isTestSource="true" />
-      <excludeFolder url="file://$MODULE_DIR$/../kotlin-step-agent/build" />
+    <content url="file://$MODULE_DIR$/../kotlin-script-runner-agent">
+      <sourceFolder url="file://$MODULE_DIR$/../kotlin-script-runner-agent/src/main/kotlin" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/../kotlin-script-runner-agent/src/main/resources" type="java-resource" />
+      <sourceFolder url="file://$MODULE_DIR$/../kotlin-script-runner-agent/src/test/kotlin" isTestSource="true" />
+      <excludeFolder url="file://$MODULE_DIR$/../kotlin-script-runner-agent/build" />
     </content>
     <orderEntry type="jdk" jdkName="1.8" jdkType="JavaSDK" />
     <orderEntry type="sourceFolder" forTests="false" />
@@ -51,7 +51,7 @@
     <orderEntry type="library" scope="TEST" name="jmock-2.5.1" level="project" />
     <orderEntry type="module" module-name="server-tools-api" />
     <orderEntry type="module" module-name="server-tools-api" />
-    <orderEntry type="module" module-name="kotlin-step-common" />
+    <orderEntry type="module" module-name="kotlin-script-runner-common" />
     <orderEntry type="module" module-name="test-api" />
     <orderEntry type="module-library" scope="TEST">
       <library>

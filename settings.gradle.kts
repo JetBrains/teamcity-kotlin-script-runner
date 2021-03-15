@@ -1,4 +1,4 @@
-rootProject.name = "kotlin-step"
-include("kotlin-step-common")
-include("kotlin-step-server")
-include("kotlin-step-agent")
+rootProject.name = "kotlin-script-runner"
+include("kotlin-script-runner-common")
+include("kotlin-script-runner-server")
+include("kotlin-script-runner-agent")

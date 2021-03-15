@@ -58,6 +58,6 @@ class KotlinScriptRunType(val pluginDescriptor: PluginDescriptor, runTypeRegistr
     companion object {
         const val TYPE = "kotlinScript"
         const val DISPLAY_NAME = "Kotlin Script"
-        const val DESCRIPTION = "Build step written in Kotlin Script"
+        const val DESCRIPTION = "Kotlin Script runner"
     }
 }

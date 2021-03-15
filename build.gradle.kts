@@ -24,8 +24,8 @@ version = extra["pluginVersion"]
 extra["teamcityVersion"] = project.findProperty("teamcityVersion") ?: "2021.1-SNAPSHOT"
 
 tasks.register<Copy>("pluginZip") {
-    from("kotlin-step-server/build/distributions/kotlin-step-$version.zip")
+    from("kotlin-script-runner-server/build/distributions/kotlin-script-runner-$version.zip")
     into("build/distributions")
-    rename("kotlin-step-$version.zip", "kotlin-step.zip")
+    rename("kotlin-script-runner-$version.zip", "kotlin-script-runner.zip")
 }
 

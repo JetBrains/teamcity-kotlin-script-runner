@@ -12,7 +12,7 @@ repositories {
 }
 
 dependencies {
-    compile(project(":kotlin-step-common"))
+    compile(project(":kotlin-script-runner-common"))
     provided("org.jetbrains.teamcity:agent-api:${rootProject.extra["teamcityVersion"]}")
     provided("org.jetbrains.teamcity.internal:agent:${rootProject.extra["teamcityVersion"]}")
     testImplementation("io.mockk:mockk:1.10.0")
@@ -31,7 +31,7 @@ tasks {
 
 tasks.getByName<Test>("test") {
     useTestNG {
-        suites("/src/test/testng-kotlin-step-agent.xml")
+        suites("/src/test/testng-kotlin-script-runner-agent.xml")
     }
 }
 

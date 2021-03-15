@@ -6,11 +6,11 @@
     </facet>
   </component>
   <component name="NewModuleRootManager" inherit-compiler-output="true">
-    <content url="file://$MODULE_DIR$/../kotlin-step-server">
-      <sourceFolder url="file://$MODULE_DIR$/../kotlin-step-server/src/main/kotlin" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/../kotlin-step-server/src/main/resources" type="java-resource" />
-      <sourceFolder url="file://$MODULE_DIR$/../kotlin-step-server/src/test/kotlin" isTestSource="true" />
-      <excludeFolder url="file://$MODULE_DIR$/../kotlin-step-server/build" />
+    <content url="file://$MODULE_DIR$/../kotlin-script-runner-server">
+      <sourceFolder url="file://$MODULE_DIR$/../kotlin-script-runner-server/src/main/kotlin" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/../kotlin-script-runner-server/src/main/resources" type="java-resource" />
+      <sourceFolder url="file://$MODULE_DIR$/../kotlin-script-runner-server/src/test/kotlin" isTestSource="true" />
+      <excludeFolder url="file://$MODULE_DIR$/../kotlin-script-runner-server/build" />
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
@@ -36,7 +36,7 @@
     <orderEntry type="module" module-name="web-openapi" />
     <orderEntry type="library" scope="PROVIDED" name="kotlin" level="project" />
     <orderEntry type="module" module-name="server-tools-api" />
-    <orderEntry type="module" module-name="kotlin-step-common" />
+    <orderEntry type="module" module-name="kotlin-script-runner-common" />
     <orderEntry type="module" module-name="server-tools" />
     <orderEntry type="module" module-name="test-api" scope="TEST" />
   </component>
