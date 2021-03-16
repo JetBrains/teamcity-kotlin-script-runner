@@ -28,7 +28,7 @@
   <props:selectSectionPropertyContent value="file" caption="Script File">
     <tr id="script.content.container">
       <th>
-        <label for="script.file">Kotlin script file file:<l:star/></label>
+        <label for="script.file">Kotlin script file:<l:star/></label>
       </th>
       <td class="codeHighlightTD">
         <props:textProperty name="script.file" className="longField">
