@@ -25,6 +25,19 @@ class KotlinToolType: ToolTypeAdapter() {
 
     override fun isSupportDownload() = true
 
+    override fun getValidPackageDescription(): String? {
+        return """
+            <p>
+            The latest realease version of Kotlin compiler can be 
+            <a href="https://github.com/JetBrains/kotlin/releases/latest">downloaded from GitHub</a>. 
+            Use files with a name <b style="white-space: nowrap;">kotlin-compiler-&lt;version&gt;.zip</b>
+            </p>
+            <p>
+            Many other versions are <a href="https://github.com/JetBrains/kotlin/releases">also available there</a>.
+            </p>
+        """.trimIndent()
+    }
+
     companion object {
         val INSTANCE = KotlinToolType()
     }
