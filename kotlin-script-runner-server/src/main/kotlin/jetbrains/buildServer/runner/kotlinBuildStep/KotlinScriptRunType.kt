@@ -43,11 +43,11 @@ class KotlinScriptRunType(val pluginDescriptor: PluginDescriptor, runTypeRegistr
         return null
     }
 
-    override fun getEditRunnerParamsJspFilePath(): String? {
+    override fun getEditRunnerParamsJspFilePath(): String {
         return pluginDescriptor.getPluginResourcesPath("kotlinScriptRunnerParams.jsp")
     }
 
-    override fun getViewRunnerParamsJspFilePath(): String? {
+    override fun getViewRunnerParamsJspFilePath(): String {
         return pluginDescriptor.getPluginResourcesPath("viewKotlinScriptRunnerParams.jsp")
     }
 
