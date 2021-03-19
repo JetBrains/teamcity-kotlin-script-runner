@@ -10,10 +10,6 @@ val BUNDLED_TOOL_VERSION = "1.4.31"
 val pluginVersion = rootProject.extra["pluginVersion"]
 version = pluginVersion
 
-repositories {
-    mavenCentral()
-}
-
 dependencies {
     agent(project(path = ":kotlin-script-runner-agent", configuration = "plugin"))
     compile(project(":kotlin-script-runner-common"))

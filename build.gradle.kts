@@ -9,8 +9,8 @@ group = "org.jetbrains.teamcity"
 
 allprojects {
     repositories {
+        mavenLocal()
         mavenCentral()
-        jcenter()
         maven(url = "https://download.jetbrains.com/teamcity-repository")
         maven(url = "https://repo.labs.intellij.net/teamcity")
     }

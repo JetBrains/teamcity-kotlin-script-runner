@@ -7,10 +7,6 @@ group = "org.jetbrains.teamcity"
 
 version = rootProject.extra["pluginVersion"]
 
-repositories {
-    mavenCentral()
-}
-
 dependencies {
     compile(project(":kotlin-script-runner-common"))
     provided("org.jetbrains.teamcity:agent-api:${rootProject.extra["teamcityVersion"]}")
