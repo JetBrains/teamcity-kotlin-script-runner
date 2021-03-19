@@ -55,6 +55,30 @@ class KotlinScriptRunType(val pluginDescriptor: PluginDescriptor, runTypeRegistr
         return null
     }
 
+    override fun describeParameters(parameters: Map<String?, String?>): String {
+        if (parameters[RunnerParamNames.SCRIPT_TYPE] == ScriptTypes.FILE) {
+            return "Script file: " + (parameters[RunnerParamNames.SCRIPT_FILE] ?: "") + " " + (parameters["ktsArgs"] ?: "")
+        } else {
+            return "Custom script: " + customScriptDescription(parameters[RunnerParamNames.SCRIPT_CONTENT])
+        }
+    }
+
+    fun customScriptDescription(scriptContent: String?):String {
+        when(scriptContent) {
+           null, "" -> {
+               return "<empty>"
+           }
+           else -> {
+               val scriptLines = scriptContent.lines()
+               return when(scriptLines.size) {
+                   0 -> "<empty>"
+                   1 -> scriptLines[0]
+                   else -> scriptLines[0] + " (and ${scriptLines.size - 1} more lines)"
+               }
+           }
+        }
+    }
+
     companion object {
         const val TYPE = "kotlinScript"
         const val DISPLAY_NAME = "Kotlin Script"
