@@ -23,9 +23,9 @@ const val KOTLIN_COMPILER_TOOL_DESCRIPTION = "Is used in Kotlin Script build ste
 
 object RunnerParamNames {
     const val SCRIPT_TYPE = "scriptType"
-    const val SCRIPT_CONTENT = "script.content"
-    const val SCRIPT_FILE = "script.file"
-    const val KOTLIN_PATH = "kotlin.path"
+    const val SCRIPT_CONTENT = "scriptContent"
+    const val SCRIPT_FILE = "scriptFile"
+    const val KOTLIN_PATH = "kotlinPath"
     const val KTS_ARGS = "ktsArgs"
 }
 
