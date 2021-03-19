@@ -26,7 +26,6 @@ import jetbrains.buildServer.agent.runner.ProgramCommandLine
 import jetbrains.buildServer.runner.CommandLineArgumentsUtil
 import jetbrains.buildServer.runner.JavaRunnerConstants
 import jetbrains.buildServer.util.FileUtil
-import jetbrains.buildServer.util.StringUtil
 import java.io.File
 
 class KotlinStepRunnerService: BuildServiceAdapter() {
@@ -58,10 +57,8 @@ class KotlinStepRunnerService: BuildServiceAdapter() {
     private fun getProgramArgs(script: String, lib: File): List<String> {
         val scriptArgs = listOf("-cp", File(lib, "kotlin-compiler.jar").canonicalPath, "org.jetbrains.kotlin.cli.jvm.K2JVMCompiler", "-script", script)
         val ktsArgs = getRunnerParameters()[RunnerParamNames.KTS_ARGS]
-        if (ktsArgs == null || ktsArgs.isEmpty())
-            return scriptArgs
-        else
-            return scriptArgs + CommandLineArgumentsUtil.extractArguments(ktsArgs)
+        return  if(ktsArgs.isNullOrBlank()) scriptArgs
+                else scriptArgs + CommandLineArgumentsUtil.extractArguments(ktsArgs)
     }
 
     private fun getClasspath(lib: File): String {
@@ -73,12 +70,12 @@ class KotlinStepRunnerService: BuildServiceAdapter() {
         val scriptType = runnerParameters[RunnerParamNames.SCRIPT_TYPE]
         val scriptFile = if (scriptType.equals(ScriptTypes.FILE)) {
             val scriptFileName = runnerParameters[RunnerParamNames.SCRIPT_FILE]
-            if (scriptFileName == null || scriptFileName.isEmpty())
+            if (scriptFileName.isNullOrBlank())
                 throw IllegalArgumentException("No script file name provided")
             File(checkoutDirectory, scriptFileName)
         } else {
             val scriptContent = getScriptContent()
-            if (StringUtil.isEmpty(scriptContent))
+            if (scriptContent.isNullOrBlank())
                 throw IllegalArgumentException("No script provided")
             val scriptFile = File.createTempFile("script", ".main.kts", getAgentTempDirectory())
             FileUtil.writeFile(scriptFile, scriptContent, "UTF-8");
