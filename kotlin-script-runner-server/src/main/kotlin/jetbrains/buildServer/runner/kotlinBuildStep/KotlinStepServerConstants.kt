@@ -20,7 +20,6 @@ import jetbrains.buildServer.log.Loggers
 
 internal val SERVER_LOG = Loggers.SERVER
 
-internal val KOTLIN_VERSIONS_SUPPORTED = listOf("1.3.72", "1.4.31")
 internal val KOTLIN_DEFAULT_VERSION_NUMBER = "1.4.31"
 internal val KOTLIN_VERSION_NUMBERS_BUNDLED = listOf("1.4.31")
 internal val KOTLIN_COMPILER_PREFIX = "kotlin-compiler-"
