@@ -2,8 +2,11 @@ package jetbrains.buildServer.runner.kotlinBuildStep
 
 import jetbrains.buildServer.BaseTestCase
 import jetbrains.buildServer.tools.ToolVersionIdHelper
+import jetbrains.buildServer.tools.available.AvailableToolsFetcher
+import jetbrains.buildServer.tools.available.FetchAvailableToolsResult
 import jetbrains.buildServer.util.ArchiveExtractorManager
 import jetbrains.buildServer.util.ArchiveFileSelector
+import jetbrains.buildServer.util.SystemTimeService
 import jetbrains.buildServer.util.ssl.SSLTrustStoreProvider
 import jetbrains.buildServer.web.openapi.PluginDescriptor
 import org.assertj.core.api.BDDAssertions.then
@@ -23,7 +26,8 @@ class KotlinServerToolProviderTest: BaseTestCase() {
     override protected fun setUp() {
         super.setUp()
         archiveManager = MockArchiveManager()
-        provider = KotlinServerToolProvider(MockPluginDescriptor(), archiveManager, MockSSLStoreProvider())
+        provider = KotlinServerToolProvider(MockPluginDescriptor(), archiveManager, MockSSLStoreProvider(),
+                SystemTimeService(), MockKotlinToolsFetcher(listOf("1.3.0", "1.3.72", "1.4.0", "1.4.31")))
     }
 
 
@@ -75,5 +79,11 @@ class KotlinServerToolProviderTest: BaseTestCase() {
 
     private class MockSSLStoreProvider: SSLTrustStoreProvider {
         override fun getTrustStore(): KeyStore? = null
+    }
+
+    private class MockKotlinToolsFetcher(val versions:List<String>): KotlinScriptAvailableToolsFetcher {
+        override fun fetchAvailable(): FetchAvailableToolsResult {
+            return FetchAvailableToolsResult.createSuccessful(versions.map { KotlinDowloadableToolVersion(it) })
+        }
     }
 }

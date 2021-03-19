@@ -18,25 +18,33 @@ package jetbrains.buildServer.runner.kotlinBuildStep
 
 import jetbrains.buildServer.plugins.files.JarSearcherBase
 import jetbrains.buildServer.tools.*
+import jetbrains.buildServer.tools.available.AvailableToolsState
+import jetbrains.buildServer.tools.available.AvailableToolsStateImpl
+import jetbrains.buildServer.tools.available.DownloadableToolVersion
+import jetbrains.buildServer.tools.available.FetchToolsPolicy
 import jetbrains.buildServer.tools.utils.URLDownloader
-import jetbrains.buildServer.util.ArchiveExtractorManager
-import jetbrains.buildServer.util.ArchiveFileSelector
-import jetbrains.buildServer.util.FileUtil
-import jetbrains.buildServer.util.UnsupportedArchiveTypeException
+import jetbrains.buildServer.util.*
 import jetbrains.buildServer.util.ssl.SSLTrustStoreProvider
 import jetbrains.buildServer.web.openapi.PluginDescriptor
 import java.io.File
 import java.io.IOException
-import java.nio.file.Path
 
-class KotlinServerToolProvider(val pluginDescriptor: PluginDescriptor, val archiveManager: ArchiveExtractorManager, val sslTrustStoreProvider: SSLTrustStoreProvider):
-        ServerToolProviderAdapter() {
+class KotlinServerToolProvider(val pluginDescriptor: PluginDescriptor,
+                               val archiveManager: ArchiveExtractorManager,
+                               val sslTrustStoreProvider: SSLTrustStoreProvider,
+                               timeService: TimeService,
+                               availableToolsFetcher: KotlinScriptAvailableToolsFetcher): ServerToolProviderAdapter() {
 
-    private val toolVersions by lazy {
-        KOTLIN_VERSIONS_SUPPORTED
-                .map { KotlinDowloadableToolVersion(it) }
-                .map { it.id to it }.toMap()
+    private val availableTools: AvailableToolsState
+
+    init {
+        availableTools = AvailableToolsStateImpl(timeService, listOf(availableToolsFetcher))
     }
+
+    private val toolVersions: Map<String, DownloadableToolVersion>
+    get() = availableTools
+            .getAvailable(FetchToolsPolicy.ReturnCached)
+            .fetchedTools.map { it.id to it }.toMap()
 
     private val bundledVersions by lazy {
         val pluginRoot = pluginDescriptor.pluginRoot.toPath()
