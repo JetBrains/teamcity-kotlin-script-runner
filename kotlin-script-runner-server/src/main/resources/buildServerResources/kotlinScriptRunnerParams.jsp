@@ -11,7 +11,7 @@
 
 <jsp:include page="/tools/editToolUsage.html?toolType=kotlin-compiler&versionParameterName=kotlin.path&class=longField"/>
 
-<props:selectSectionProperty name="scriptType" title="Script Type">
+<props:selectSectionProperty name="scriptType" title="Script type">
 
   <props:selectSectionPropertyContent value="customScript" caption="Custom Script">
     <tr id="script.content.container">

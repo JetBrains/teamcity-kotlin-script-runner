@@ -22,11 +22,12 @@ class KotlinToolType: ToolTypeAdapter() {
 
     override fun getType() = KOTLIN_COMPILER_TOOL_TYPE
     override fun getDisplayName() = KOTLIN_COMPILER_TOOL_DISPLAY_NAME
+    override fun getDescription() = KOTLIN_COMPILER_TOOL_DESCRIPTION
 
     override fun isSupportDownload() = true
 
-    override fun getValidPackageDescription(): String? {
-        return """
+    override fun getValidPackageDescription() =
+         """
             <p>
             The latest realease version of Kotlin compiler can be 
             <a href="https://github.com/JetBrains/kotlin/releases/latest">downloaded from GitHub</a>. 
@@ -36,7 +37,7 @@ class KotlinToolType: ToolTypeAdapter() {
             Many other versions are <a href="https://github.com/JetBrains/kotlin/releases">also available there</a>.
             </p>
         """.trimIndent()
-    }
+
 
     companion object {
         val INSTANCE = KotlinToolType()
