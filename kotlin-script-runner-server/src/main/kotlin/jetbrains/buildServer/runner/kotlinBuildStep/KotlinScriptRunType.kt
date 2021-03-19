@@ -16,6 +16,7 @@
 
 package jetbrains.buildServer.runner.kotlinBuildStep
 
+import jetbrains.buildServer.serverSide.InvalidProperty
 import jetbrains.buildServer.serverSide.PropertiesProcessor
 import jetbrains.buildServer.serverSide.RunType
 import jetbrains.buildServer.serverSide.RunTypeRegistry
@@ -39,8 +40,26 @@ class KotlinScriptRunType(val pluginDescriptor: PluginDescriptor, runTypeRegistr
         return DESCRIPTION
     }
 
-    override fun getRunnerPropertiesProcessor(): PropertiesProcessor? {
-        return null
+    override fun getRunnerPropertiesProcessor(): PropertiesProcessor {
+        return PropertiesProcessor { params ->
+            val errors: MutableList<InvalidProperty> = ArrayList()
+            val scriptType = notBlank(params, RunnerParamNames.SCRIPT_TYPE, "Script type is not specified", errors)
+            if (scriptType == ScriptTypes.FILE) {
+                notBlank(params, RunnerParamNames.SCRIPT_FILE, "Script file path is not specified", errors)
+                params.remove(RunnerParamNames.SCRIPT_CONTENT)
+            } else if (scriptType == ScriptTypes.CUSTOM) {
+                notBlank(params, RunnerParamNames.SCRIPT_CONTENT, "Custom script content is not provided", errors)
+                params.remove(RunnerParamNames.SCRIPT_FILE)
+            }
+            errors
+        }
+    }
+
+    private fun notBlank(params: Map<String, String>, paramName: String, message: String, errors: MutableList<InvalidProperty>): String? {
+        val paramValue = params[paramName]
+        if (paramValue.isNullOrBlank())
+            errors.add(InvalidProperty(paramName, message))
+        return paramValue
     }
 
     override fun getEditRunnerParamsJspFilePath(): String {

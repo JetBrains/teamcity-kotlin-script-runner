@@ -36,6 +36,7 @@
             <bs:vcsTree fieldId="script.file"/>
           </jsp:attribute>
         </props:textProperty>
+        <span id="error_script.file" class="error"></span>
         <span class="smallNote">To use annotation based dependency references the file must have *.main.kts extension</span>
       </td>
     </tr>
