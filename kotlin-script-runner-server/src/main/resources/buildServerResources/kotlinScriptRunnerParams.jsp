@@ -38,7 +38,7 @@
           </jsp:attribute>
         </props:textProperty>
         <span id="error_${propertyNames.scriptFile}" class="error"></span>
-        <span class="smallNote">To use annotation based dependency references the file must have *.main.kts extension</span>
+        <span class="smallNote">To support annotation-based references to Maven dependencies, the provided file must have the <i>*.main.kts</i> extension. <bs:help file="Kotlin+Script#script-file"/></span>
       </td>
     </tr>
   </props:selectSectionPropertyContent>
