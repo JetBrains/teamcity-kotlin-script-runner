@@ -25,7 +25,7 @@ tasks {
     }
 
     register<Zip>("includeToolDef") {
-        archiveFileName.set("kotlin-compiler.$BUNDLED_TOOL_VERSION.zip")
+        archiveFileName.set("kotlin.compiler.$BUNDLED_TOOL_VERSION.zip")
         destinationDirectory.set(file("$buildDir/bundled"))
 
         from(zipTree("$buildDir/bundled-download/kotlin-compiler-$BUNDLED_TOOL_VERSION.zip")) {

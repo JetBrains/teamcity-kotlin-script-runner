@@ -17,7 +17,7 @@
 package jetbrains.buildServer.runner.kotlinBuildStep
 
 const val KOTLIN_RUNNER_TYPE = "kotlinScript"
-const val KOTLIN_COMPILER_TOOL_TYPE = "kotlin-compiler"
+const val KOTLIN_COMPILER_TOOL_TYPE = "kotlin.compiler"
 const val KOTLIN_COMPILER_TOOL_DISPLAY_NAME = "Kotlin compiler"
 const val KOTLIN_COMPILER_TOOL_DESCRIPTION = "Is used in Kotlin Script build steps."
 
