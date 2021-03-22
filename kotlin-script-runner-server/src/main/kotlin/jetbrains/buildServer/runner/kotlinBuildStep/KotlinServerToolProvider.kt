@@ -72,12 +72,8 @@ class KotlinServerToolProvider(val pluginDescriptor: PluginDescriptor,
 
         val versionNumber = zipName.substring(KOTLIN_COMPILER_PREFIX.length, zipName.length - DOT_ZIP.length)
         val toolId = ToolVersionIdHelper.getToolId(KotlinToolType.INSTANCE, versionNumber)
-        val toolVersion = toolVersions.get(toolId)
-
-        return if (toolVersion == null)
-            GetPackageVersionResult.error("Failed to determine Kotlin version for tool id ${toolId}")
-        else
-            GetPackageVersionResult.version(toolVersion)
+        val toolVersion = toolVersions.get(toolId) ?: KotlinDowloadableToolVersion(versionNumber)
+        return GetPackageVersionResult.version(toolVersion)
     }
 
     @Throws(ToolException::class)
