@@ -56,7 +56,7 @@ class KotlinStepRunnerService: BuildServiceAdapter() {
 
     private fun getProgramArgs(script: String, lib: File): List<String> {
         val scriptArgs = listOf("-cp", File(lib, "kotlin-compiler.jar").canonicalPath, "org.jetbrains.kotlin.cli.jvm.K2JVMCompiler", "-script", script)
-        val ktsArgs = getRunnerParameters()[RunnerParamNames.KTS_ARGS]
+        val ktsArgs = getRunnerParameters()[RunnerParamNames.KOTLIN_ARGS]
         return  if(ktsArgs.isNullOrBlank()) scriptArgs
                 else scriptArgs + CommandLineArgumentsUtil.extractArguments(ktsArgs)
     }

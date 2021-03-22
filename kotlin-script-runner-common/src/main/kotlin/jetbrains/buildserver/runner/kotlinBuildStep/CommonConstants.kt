@@ -26,7 +26,7 @@ object RunnerParamNames {
     const val SCRIPT_CONTENT = "scriptContent"
     const val SCRIPT_FILE = "scriptFile"
     const val KOTLIN_PATH = "kotlinPath"
-    const val KTS_ARGS = "ktsArgs"
+    const val KOTLIN_ARGS = "kotlinArgs"
 }
 
 object ScriptTypes {

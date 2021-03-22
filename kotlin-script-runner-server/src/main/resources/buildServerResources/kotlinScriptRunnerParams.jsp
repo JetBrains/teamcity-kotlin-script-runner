@@ -47,10 +47,10 @@
 
 <tr class="advancedSetting">
   <th>
-    <label for="${propertyNames.ktsArgs}">Script parameters:</label>
+    <label for="${propertyNames.kotlinArgs}">Script parameters:</label>
   </th>
   <td>
-    <props:textProperty name="${propertyNames.ktsArgs}" className="longField" expandable="true"/>
+    <props:textProperty name="${propertyNames.kotlinArgs}" className="longField" expandable="true"/>
   </td>
 </tr>
 
