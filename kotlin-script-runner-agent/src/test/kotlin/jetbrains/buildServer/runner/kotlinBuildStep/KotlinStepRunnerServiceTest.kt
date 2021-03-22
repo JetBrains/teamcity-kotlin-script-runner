@@ -60,12 +60,13 @@ class KotlinStepRunnerServiceTest {
         runnerParameters[RunnerParamNames.SCRIPT_TYPE] = ScriptTypes.CUSTOM
         runnerParameters[RunnerParamNames.SCRIPT_CONTENT] = "println(\"Hello!\")"
         runnerParameters[RunnerParamNames.KOTLIN_PATH] = "path/to/kotlin"
+        runnerParameters[RunnerParamNames.KOTLIN_ARGS] = "one two three"
         runnerService.initialize(build, runnerContext)
         val commandLine = runnerService.makeProgramCommandLine()
         then(commandLine.executablePath).containsIgnoringCase("java")
         then(commandLine.arguments.map { if (it.contains(File.separator)) it.substring(it.lastIndexOf(File.separator) + 1) else it}.joinToString(" "))
                 .startsWith("-classpath kotlin-preloader.jar org.jetbrains.kotlin.preloading.Preloader -cp kotlin-compiler.jar org.jetbrains.kotlin.cli.jvm.K2JVMCompiler -script")
-                .endsWith(".main.kts")
+                .endsWith(".main.kts one two three")
     }
 
     @Test
@@ -73,11 +74,12 @@ class KotlinStepRunnerServiceTest {
         runnerParameters[RunnerParamNames.SCRIPT_TYPE] = ScriptTypes.FILE
         runnerParameters[RunnerParamNames.SCRIPT_FILE] = "myscript.main.kts"
         runnerParameters[RunnerParamNames.KOTLIN_PATH] = "path/to/kotlin"
+        runnerParameters[RunnerParamNames.KOTLIN_ARGS] = "one two three"
         runnerService.initialize(build, runnerContext)
         val commandLine = runnerService.makeProgramCommandLine()
         then(commandLine.executablePath).containsIgnoringCase("java")
         then(commandLine.arguments.map { if (it.contains(File.separator)) it.substring(it.lastIndexOf(File.separator) + 1) else it}.joinToString(" "))
-                .isEqualTo("-classpath kotlin-preloader.jar org.jetbrains.kotlin.preloading.Preloader -cp kotlin-compiler.jar org.jetbrains.kotlin.cli.jvm.K2JVMCompiler -script myscript.main.kts")
+                .isEqualTo("-classpath kotlin-preloader.jar org.jetbrains.kotlin.preloading.Preloader -cp kotlin-compiler.jar org.jetbrains.kotlin.cli.jvm.K2JVMCompiler -script myscript.main.kts one two three")
     }
 
 
