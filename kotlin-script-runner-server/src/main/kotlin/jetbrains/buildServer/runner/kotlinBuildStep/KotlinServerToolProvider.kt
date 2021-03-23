@@ -41,10 +41,14 @@ class KotlinServerToolProvider(val pluginDescriptor: PluginDescriptor,
         availableTools = AvailableToolsStateImpl(timeService, listOf(availableToolsFetcher))
     }
 
-    private val toolVersions: Map<String, DownloadableToolVersion>
-    get() = availableTools
+    private var toolVersions: Map<String, DownloadableToolVersion> = emptyMap()
+    get() {
+        val result = availableTools
             .getAvailable(FetchToolsPolicy.ReturnCached)
             .fetchedTools.map { it.id to it }.toMap()
+        if (!result.isEmpty()) field = result
+        return field
+    }
 
     private val bundledVersions by lazy {
         val pluginRoot = pluginDescriptor.pluginRoot.toPath()

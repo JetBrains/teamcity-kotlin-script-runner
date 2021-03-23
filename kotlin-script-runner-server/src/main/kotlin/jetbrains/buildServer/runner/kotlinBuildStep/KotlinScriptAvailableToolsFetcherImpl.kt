@@ -21,18 +21,24 @@ class KotlinScriptAvailableToolsFetcherImpl: KotlinScriptAvailableToolsFetcher {
 
     override fun fetchAvailable(): FetchAvailableToolsResult {
         val url = URL(TOOL_REPOSITORY_URL)
-        val conn = url.openConnection()
-        val json =  BufferedReader(InputStreamReader(conn.getInputStream(), StandardCharsets.UTF_8)).readText()
-        val releases = gson.fromJson(json, JsonArray::class.java)
-        val tools = releases
-                .filter { it.isJsonObject }
-                .map { it.asJsonObject["tag_name"] }
-                .filter { it != null }
-                .map { it.asString }
-                .filter { RELEASE_VERSION_PATTERN.matcher(it).matches() }
-                .map { it.substring(1) }  // v1.4.31 => 1.4.31
-                .filter { VersionComparatorUtil.compare(it, "1.3.70") >= 0 }
-                .map { KotlinDowloadableToolVersion(it) }
-        return FetchAvailableToolsResult.createSuccessful(tools)
+        try {
+            val conn = url.openConnection()
+            val json = BufferedReader(InputStreamReader(conn.getInputStream(), StandardCharsets.UTF_8)).readText()
+            val releases = gson.fromJson(json, JsonArray::class.java)
+            val tools = releases
+                    .filter { it.isJsonObject }
+                    .map { it.asJsonObject["tag_name"] }
+                    .filter { it != null }
+                    .map { it.asString }
+                    .filter { RELEASE_VERSION_PATTERN.matcher(it).matches() }
+                    .map { it.substring(1) }  // v1.4.31 => 1.4.31
+                    .filter { VersionComparatorUtil.compare(it, "1.3.70") >= 0 }
+                    .map { KotlinDowloadableToolVersion(it) }
+            return FetchAvailableToolsResult.createSuccessful(tools)
+        } catch (ex: Throwable) {
+            val msg = "Failed to fetch available Kotlin compiler versions from ${url.toString()}"
+            SERVER_LOG.warnAndDebugDetails(msg, ex)
+            return FetchAvailableToolsResult.createError(msg, ex)
+        }
     }
 }
