@@ -24,6 +24,8 @@ import jetbrains.buildServer.tools.available.DownloadableToolVersion
 import jetbrains.buildServer.tools.available.FetchToolsPolicy
 import jetbrains.buildServer.tools.utils.URLDownloader
 import jetbrains.buildServer.util.*
+import jetbrains.buildServer.util.positioning.PositionAware
+import jetbrains.buildServer.util.positioning.PositionConstraint
 import jetbrains.buildServer.util.ssl.SSLTrustStoreProvider
 import jetbrains.buildServer.web.openapi.PluginDescriptor
 import java.io.File
@@ -33,7 +35,7 @@ class KotlinServerToolProvider(val pluginDescriptor: PluginDescriptor,
                                val archiveManager: ArchiveExtractorManager,
                                val sslTrustStoreProvider: SSLTrustStoreProvider,
                                timeService: TimeService,
-                               availableToolsFetcher: KotlinScriptAvailableToolsFetcher): ServerToolProviderAdapter() {
+                               availableToolsFetcher: KotlinScriptAvailableToolsFetcher): PositionAware, ServerToolProviderAdapter() {
 
     private val availableTools: AvailableToolsState
 
@@ -118,4 +120,9 @@ class KotlinServerToolProvider(val pluginDescriptor: PluginDescriptor,
                     </teamcity-agent-plugin>
                 """.trimIndent(), "UTF-8")
     }
+
+    override fun getConstraint() = PositionConstraint.first()
+    // otherwise IntelliJServerToolProvider may try to parse the downloaded tool zips as well, see TW-70657
+
+    override fun getOrderId() = KotlinToolType.INSTANCE.type
 }
