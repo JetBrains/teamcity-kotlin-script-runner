@@ -34,7 +34,7 @@
       <td class="codeHighlightTD">
         <props:textProperty name="${propertyNames.scriptFile}" className="longField">
           <jsp:attribute name="afterTextField">
-            <bs:vcsTree fieldId="script.file"/>
+            <bs:vcsTree fieldId="${propertyNames.scriptFile}"/>
           </jsp:attribute>
         </props:textProperty>
         <span id="error_${propertyNames.scriptFile}" class="error"></span>
