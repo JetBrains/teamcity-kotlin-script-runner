@@ -2,6 +2,7 @@ package jetbrains.buildServer.runner.kotlinBuildStep
 
 import com.google.gson.Gson
 import com.google.gson.JsonArray
+import jetbrains.buildServer.serverSide.TeamCityProperties
 import jetbrains.buildServer.tools.available.AvailableToolsFetcher
 import jetbrains.buildServer.tools.available.FetchAvailableToolsResult
 import jetbrains.buildServer.util.VersionComparatorUtil
@@ -20,7 +21,7 @@ class KotlinScriptAvailableToolsFetcherImpl: KotlinScriptAvailableToolsFetcher {
     val TOOL_REPOSITORY_URL = "https://api.github.com/repos/JetBrains/kotlin/releases"
 
     override fun fetchAvailable(): FetchAvailableToolsResult {
-        val url = URL(TOOL_REPOSITORY_URL)
+        val url = URL(TeamCityProperties.getProperty("teamcity.internal.runner.kotlinScript.toolsUrl", TOOL_REPOSITORY_URL))
         try {
             val conn = url.openConnection()
             val json = BufferedReader(InputStreamReader(conn.getInputStream(), StandardCharsets.UTF_8)).readText()
