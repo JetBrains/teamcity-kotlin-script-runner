@@ -30,7 +30,7 @@ class KotlinToolType: ToolTypeAdapter() {
          """
             <p>
             The latest release version of Kotlin compiler can be 
-            <a href="https://github.com/JetBrains/kotlin/releases/latest">downloaded from GitHub</a>. 
+            <a href="https://github.com/JetBrains/kotlin/releases/latest" target="_blank" rel="noreferrer">downloaded from GitHub</a>. 
             Use files with a name <b style="white-space: nowrap;">kotlin-compiler-&lt;version&gt;.zip</b>.
             </p>
             <p>
