@@ -12,7 +12,7 @@
 
 <jsp:include page="/tools/editToolUsage.html?toolType=kotlin.compiler&versionParameterName=${propertyNames.kotlinPath}&class=longField"/>
 
-<props:selectSectionProperty name="${propertyNames.scriptType}" title="Script type">
+<props:selectSectionProperty name="${propertyNames.scriptType}" title="Script type:">
 
   <props:selectSectionPropertyContent value="${propertyNames.typeCustom}" caption="Custom Script">
     <tr id="script.content.container">
