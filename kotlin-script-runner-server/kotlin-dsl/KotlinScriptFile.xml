@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<dsl-extension kind="buildStep" type="kotlinScript" generateDslJar="true" applicable="params['scriptType'] == 'file'">
+  <class name="KotlinScriptFileBuildStep">
+    <description>
+      A build step running a Kotlin script with from a specified file
+    </description>
+  </class>
+  <function name="ktsFile">
+    <description>
+      Adds a build step running a Kotlin script from a specified file
+      @see KotlinScriptFileBuildStep
+    </description>
+  </function>
+  <init>
+    <param name="scriptType" value="file"/>
+  </init>
+  <params>
+    <param name="teamcity.build.workingDir" dslName="workingDir">
+      <description>
+        [Build working directory](https://www.jetbrains.com/help/teamcity/?Build+Working+Directory) for the script,
+        specify it if it is different from the [checkout directory](https://www.jetbrains.com/help/teamcity/?Build+Checkout+Directory).
+      </description>
+    </param>
+    <param name="scriptFile" dslName="scriptFile" mandatory="true">
+      <description>
+        A path to a file with .main.kts extension
+      </description>
+    </param>
+    <param name="kotlinPath" dslName="kotlinPath">
+      <description>
+        Path to Kotlin compiler
+      </description>
+    </param>
+    <param name="kotlinArgs">
+      <description>
+        Space-separated list of additional arguments for Kotlin script
+      </description>
+    </param>
+    <param name="target.jdk.home" dslName="jdkHome">
+      <description>
+        Custom [JDK](https://www.jetbrains.com/help/teamcity/?Predefined+Build+Parameters#PredefinedBuildParameters-DefiningJava-relatedEnvironmentVariables) to use.
+        The default is JAVA_HOME environment variable or the agent's own Java.
+      </description>
+    </param>
+    <param name="jvmArgs">
+      <description>
+        Space-separated list of additional arguments for JVM
+      </description>
+    </param>
+  </params>
+</dsl-extension>

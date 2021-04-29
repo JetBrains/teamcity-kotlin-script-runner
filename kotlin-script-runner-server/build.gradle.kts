@@ -84,14 +84,11 @@ teamcity {
                 from("$buildDir/bundled")
             }
         }
-/*
         files {
             into("kotlin-dsl") {
                 from("kotlin-dsl")
             }
         }
-
- */
     }
 
 }
