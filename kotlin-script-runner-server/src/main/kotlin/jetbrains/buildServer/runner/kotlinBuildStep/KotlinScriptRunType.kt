@@ -24,6 +24,8 @@ import jetbrains.buildServer.web.openapi.PluginDescriptor
 
 class KotlinScriptRunType(val pluginDescriptor: PluginDescriptor, runTypeRegistry: RunTypeRegistry) : RunType() {
 
+    private val myDefaults = mapOf(RunnerParamNames.KOTLIN_PATH to "%teamcity.tool.kotlin.compiler.DEFAULT%")
+
     init {
         runTypeRegistry.registerRunType(this)
     }
@@ -71,7 +73,7 @@ class KotlinScriptRunType(val pluginDescriptor: PluginDescriptor, runTypeRegistr
     }
 
     override fun getDefaultRunnerProperties(): Map<String, String>? {
-        return null
+        return myDefaults;
     }
 
     override fun describeParameters(parameters: Map<String?, String?>): String {
