@@ -21,7 +21,7 @@ import jetbrains.buildServer.tools.ToolVersionIdHelper
 
 internal val SERVER_LOG = Loggers.SERVER
 
-internal val KOTLIN_BUNDLED_VERSION_NUMBER = "1.4.31"
+internal val KOTLIN_BUNDLED_VERSION_NUMBER = "1.5.0"
 internal val KOTLIN_BUNDLED_VERSION_ID = ToolVersionIdHelper.getToolId(KotlinToolType.INSTANCE, "bundled")
 internal val KOTLIN_COMPILER_PREFIX = "kotlin-compiler-"
 internal val DOT_ZIP = ".zip"
