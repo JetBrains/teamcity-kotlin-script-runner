@@ -54,20 +54,17 @@ class KotlinServerToolProvider(val pluginDescriptor: PluginDescriptor,
 
     private val bundledVersions by lazy {
         val pluginRoot = pluginDescriptor.pluginRoot.toPath()
-        KOTLIN_VERSION_NUMBERS_BUNDLED.map {
-            val toolId = ToolVersionIdHelper.getToolId(KotlinToolType.INSTANCE, it)
-            val path = pluginRoot.resolve("bundled").resolve(toolId + DOT_ZIP)
-            SimpleInstalledToolVersion(
-                    SimpleToolVersion(getType(), it, toolId),
-                    null, null, path.toFile())
-        }
+        val path = pluginRoot.resolve("bundled").resolve(KOTLIN_BUNDLED_VERSION_ID + DOT_ZIP)
+        listOf(SimpleInstalledToolVersion(
+                SimpleToolVersion(getType(), KOTLIN_BUNDLED_VERSION_NUMBER, KOTLIN_BUNDLED_VERSION_ID),
+                null, null, path.toFile()))
     }
 
     override fun getType(): ToolType = KotlinToolType.INSTANCE
 
     override fun getBundledToolVersions() = bundledVersions
 
-    override fun getDefaultBundledVersionId() = ToolVersionIdHelper.getToolId(KotlinToolType.INSTANCE, KOTLIN_DEFAULT_VERSION_NUMBER)
+    override fun getDefaultBundledVersionId() = KOTLIN_BUNDLED_VERSION_ID
 
     override fun getAvailableToolVersions() = toolVersions.values
 

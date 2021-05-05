@@ -17,11 +17,12 @@
 package jetbrains.buildServer.runner.kotlinBuildStep
 
 import jetbrains.buildServer.log.Loggers
+import jetbrains.buildServer.tools.ToolVersionIdHelper
 
 internal val SERVER_LOG = Loggers.SERVER
 
-internal val KOTLIN_DEFAULT_VERSION_NUMBER = "1.4.31"
-internal val KOTLIN_VERSION_NUMBERS_BUNDLED = listOf("1.4.31")
+internal val KOTLIN_BUNDLED_VERSION_NUMBER = "1.4.31"
+internal val KOTLIN_BUNDLED_VERSION_ID = ToolVersionIdHelper.getToolId(KotlinToolType.INSTANCE, "bundled")
 internal val KOTLIN_COMPILER_PREFIX = "kotlin-compiler-"
 internal val DOT_ZIP = ".zip"
 internal val MIN_ZIP_NAME_LEN = KOTLIN_COMPILER_PREFIX.length + DOT_ZIP.length
