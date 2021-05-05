@@ -5,7 +5,7 @@
       A build step running a Kotlin script with from a specified file
     </description>
   </class>
-  <function name="ktsFile">
+  <function name="kotlinFile">
     <description>
       Adds a build step running a Kotlin script from a specified file
       @see KotlinScriptFileBuildStep
@@ -21,17 +21,17 @@
         specify it if it is different from the [checkout directory](https://www.jetbrains.com/help/teamcity/?Build+Checkout+Directory).
       </description>
     </param>
-    <param name="scriptFile" dslName="scriptFile" mandatory="true">
+    <param name="scriptFile" dslName="path" mandatory="true">
       <description>
         A path to a file with .main.kts extension
       </description>
     </param>
-    <param name="kotlinPath" dslName="kotlinPath">
+    <param name="kotlinPath" dslName="compiler">
       <description>
         Path to Kotlin compiler
       </description>
     </param>
-    <param name="kotlinArgs">
+    <param name="kotlinArgs" dslName="arguments">
       <description>
         Space-separated list of additional arguments for Kotlin script
       </description>
