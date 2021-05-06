@@ -26,6 +26,7 @@ internal val KOTLIN_BUNDLED_VERSION_ID = ToolVersionIdHelper.getToolId(KotlinToo
 internal val KOTLIN_COMPILER_PREFIX = "kotlin-compiler-"
 internal val DOT_ZIP = ".zip"
 internal val MIN_ZIP_NAME_LEN = KOTLIN_COMPILER_PREFIX.length + DOT_ZIP.length
+internal val DEFAULT_KOTLIN_PATH_REF = "%teamcity.tool.kotlin.compiler.DEFAULT%"
 
 internal fun getToolFileName(version: String): String = KOTLIN_COMPILER_PREFIX + version + DOT_ZIP
 

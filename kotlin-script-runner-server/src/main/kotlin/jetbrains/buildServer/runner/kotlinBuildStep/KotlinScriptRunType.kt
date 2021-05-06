@@ -24,7 +24,7 @@ import jetbrains.buildServer.web.openapi.PluginDescriptor
 
 class KotlinScriptRunType(val pluginDescriptor: PluginDescriptor, runTypeRegistry: RunTypeRegistry) : RunType() {
 
-    private val myDefaults = mapOf(RunnerParamNames.KOTLIN_PATH to "%teamcity.tool.kotlin.compiler.DEFAULT%")
+    private val myDefaults = mapOf(RunnerParamNames.KOTLIN_PATH to DEFAULT_KOTLIN_PATH_REF)
 
     init {
         runTypeRegistry.registerRunType(this)

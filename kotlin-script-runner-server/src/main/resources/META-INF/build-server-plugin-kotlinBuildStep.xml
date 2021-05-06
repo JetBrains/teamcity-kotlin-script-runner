@@ -7,4 +7,5 @@
   <bean id="kotlinServerToolProvider" class="jetbrains.buildServer.runner.kotlinBuildStep.KotlinServerToolProvider"/>
   <bean id="kotlinScriptAvailableToolsFetcher" class="jetbrains.buildServer.runner.kotlinBuildStep.KotlinScriptAvailableToolsFetcherImpl" />
   <bean class="jetbrains.buildServer.runner.kotlinBuildStep.KotlinScriptPropertyNamesProvider" />
+  <bean class="jetbrains.buildServer.runner.kotlinBuildStep.KotlinScriptDiscovery" />
 </beans>
