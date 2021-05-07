@@ -1,8 +1,10 @@
 package jetbrains.buildServer.runner.kotlinBuildStep
 
+import jetbrains.buildServer.serverSide.BuildTypeSettings
 import jetbrains.buildServer.serverSide.discovery.BreadthFirstRunnerDiscoveryExtension
 import jetbrains.buildServer.serverSide.discovery.DiscoveredObject
 import jetbrains.buildServer.util.CollectionsUtil
+import jetbrains.buildServer.util.browser.Browser
 import jetbrains.buildServer.util.browser.Element
 import jetbrains.buildServer.util.positioning.PositionAware
 import jetbrains.buildServer.util.positioning.PositionConstraint
@@ -21,6 +23,17 @@ class KotlinScriptDiscovery: BreadthFirstRunnerDiscoveryExtension(), PositionAwa
             }
         }
         return result
+    }
+
+    override protected fun postProcessDiscoveredObjects(settings: BuildTypeSettings, browser: Browser, discovered: List<DiscoveredObject?>): List<DiscoveredObject?> {
+        val existingScripts = settings.buildRunners
+                .filter { it.type.equals(KOTLIN_RUNNER_TYPE) && ScriptTypes.FILE.equals(it.parameters[RunnerParamNames.SCRIPT_TYPE]) }
+                .mapNotNull { it.parameters[RunnerParamNames.SCRIPT_FILE] }
+                .map { it.replace("\\", "/") }.toSet()
+
+        return discovered.filter {
+            it != null && !existingScripts.contains(it.parameters[RunnerParamNames.SCRIPT_FILE]?.replace("\\", "/"))
+        }
     }
 
     private fun skipElement(element: Element): Boolean {
