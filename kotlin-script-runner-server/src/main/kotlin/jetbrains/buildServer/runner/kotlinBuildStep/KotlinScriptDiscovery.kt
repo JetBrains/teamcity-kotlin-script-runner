@@ -39,8 +39,8 @@ class KotlinScriptDiscovery: BreadthFirstRunnerDiscoveryExtension(), PositionAwa
     private fun skipElement(element: Element): Boolean {
         if (!element.isLeaf)
             return true
-        val name = element.name.toLowerCase()
-        return !name.endsWith(".kts") || name.endsWith(".module.kts") || name.endsWith(".gradle.kts")
+        val extension = element.name.toLowerCase().substringAfter(".")
+        return !KOTLIN_RUNNER_DETECTABLE_EXTENSIONS.contains(extension)
     }
 
     override fun getConstraint() = PositionConstraint.last()
