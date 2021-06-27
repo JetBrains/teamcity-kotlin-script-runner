@@ -23,4 +23,6 @@ Please note that these annotations will work with a custom script and will only 
 ## Building the plugin
 
 To build the plugin please use `gradlew clean build pluginZip` 
+
+Please find more details in TeamCity Documentation
  
