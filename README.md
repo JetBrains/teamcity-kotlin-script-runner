@@ -24,5 +24,5 @@ Please note that these annotations will work with a custom script and will only 
 
 To build the plugin please use `gradlew clean build pluginZip` 
 
-Please find more details in TeamCity Documentation
+Please find more details in [TeamCity Documentation](https://www.jetbrains.com/help/teamcity/kotlin-script.html)
  
