@@ -58,7 +58,8 @@ class KotlinStepRunnerService: BuildServiceAdapter() {
         val scriptArgs = listOf("-cp", File(lib, "kotlin-compiler.jar").canonicalPath, "org.jetbrains.kotlin.cli.jvm.K2JVMCompiler", "-script", script)
         val ktsArgs = getRunnerParameters()[RunnerParamNames.KOTLIN_ARGS]
         return  if(ktsArgs.isNullOrBlank()) scriptArgs
-                else scriptArgs + CommandLineArgumentsUtil.extractArguments(ktsArgs)
+                else if (ktsArgs.startsWith("-- ")) scriptArgs + CommandLineArgumentsUtil.extractArguments(ktsArgs)
+                else scriptArgs + CommandLineArgumentsUtil.extractArguments("-- " + ktsArgs)
     }
 
     private fun getClasspath(lib: File): String {
