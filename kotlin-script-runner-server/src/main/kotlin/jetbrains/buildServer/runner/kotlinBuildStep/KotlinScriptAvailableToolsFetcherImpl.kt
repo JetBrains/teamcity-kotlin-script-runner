@@ -2,11 +2,14 @@ package jetbrains.buildServer.runner.kotlinBuildStep
 
 import com.google.gson.Gson
 import com.google.gson.JsonArray
+import jetbrains.buildServer.serverSide.IOGuard
 import jetbrains.buildServer.serverSide.TeamCityProperties
 import jetbrains.buildServer.tools.available.AvailableToolsFetcher
 import jetbrains.buildServer.tools.available.FetchAvailableToolsResult
+import jetbrains.buildServer.util.FuncThrow
 import jetbrains.buildServer.util.VersionComparatorUtil
 import java.io.BufferedReader
+import java.io.IOException
 import java.io.InputStreamReader
 import java.net.URL
 import java.nio.charset.StandardCharsets
@@ -23,8 +26,9 @@ class KotlinScriptAvailableToolsFetcherImpl: KotlinScriptAvailableToolsFetcher {
     override fun fetchAvailable(): FetchAvailableToolsResult {
         val url = URL(TeamCityProperties.getProperty("teamcity.internal.runner.kotlinScript.toolsUrl", TOOL_REPOSITORY_URL))
         try {
-            val conn = url.openConnection()
-            val json = BufferedReader(InputStreamReader(conn.getInputStream(), StandardCharsets.UTF_8)).readText()
+            val json = IOGuard.allowNetworkCall<String, Exception> {
+                BufferedReader(InputStreamReader(url.openConnection().getInputStream(), StandardCharsets.UTF_8)).readText()
+            }
             val releases = gson.fromJson(json, JsonArray::class.java)
             val tools = releases
                     .filter { it.isJsonObject }
@@ -36,7 +40,7 @@ class KotlinScriptAvailableToolsFetcherImpl: KotlinScriptAvailableToolsFetcher {
                     .filter { VersionComparatorUtil.compare(it, "1.3.70") >= 0 }
                     .map { KotlinDowloadableToolVersion(it) }
             return FetchAvailableToolsResult.createSuccessful(tools)
-        } catch (ex: Throwable) {
+        } catch (ex: Exception) {
             val msg = "Failed to fetch available Kotlin compiler versions from ${url.toString()}"
             SERVER_LOG.warnAndDebugDetails(msg, ex)
             return FetchAvailableToolsResult.createError(msg, ex)
