@@ -65,7 +65,7 @@ class KotlinStepRunnerServiceTest {
         val commandLine = runnerService.makeProgramCommandLine()
         then(commandLine.executablePath).containsIgnoringCase("java")
         then(commandLine.arguments.map { if (it.contains(File.separator)) it.substring(it.lastIndexOf(File.separator) + 1) else it}.joinToString(" "))
-                .startsWith("-classpath kotlin-preloader.jar org.jetbrains.kotlin.preloading.Preloader -cp kotlin-compiler.jar org.jetbrains.kotlin.cli.jvm.K2JVMCompiler -script")
+                .startsWith("-Dkotlin.main.kts.compiled.scripts.cache.dir= -classpath kotlin-preloader.jar org.jetbrains.kotlin.preloading.Preloader -cp kotlin-compiler.jar org.jetbrains.kotlin.cli.jvm.K2JVMCompiler -script")
                 .endsWith(".main.kts -- one two three")
     }
 
@@ -79,7 +79,7 @@ class KotlinStepRunnerServiceTest {
         val commandLine = runnerService.makeProgramCommandLine()
         then(commandLine.executablePath).containsIgnoringCase("java")
         then(commandLine.arguments.map { if (it.contains(File.separator)) it.substring(it.lastIndexOf(File.separator) + 1) else it}.joinToString(" "))
-                .isEqualTo("-classpath kotlin-preloader.jar org.jetbrains.kotlin.preloading.Preloader -cp kotlin-compiler.jar org.jetbrains.kotlin.cli.jvm.K2JVMCompiler -script myscript.main.kts -- one two three")
+                .isEqualTo("-Dkotlin.main.kts.compiled.scripts.cache.dir= -classpath kotlin-preloader.jar org.jetbrains.kotlin.preloading.Preloader -cp kotlin-compiler.jar org.jetbrains.kotlin.cli.jvm.K2JVMCompiler -script myscript.main.kts -- one two three")
     }
 
     @Test
@@ -92,7 +92,7 @@ class KotlinStepRunnerServiceTest {
         val commandLine = runnerService.makeProgramCommandLine()
         then(commandLine.executablePath).containsIgnoringCase("java")
         then(commandLine.arguments.map { if (it.contains(File.separator)) it.substring(it.lastIndexOf(File.separator) + 1) else it}.joinToString(" "))
-                .startsWith("-classpath kotlin-preloader.jar org.jetbrains.kotlin.preloading.Preloader -cp kotlin-compiler.jar org.jetbrains.kotlin.cli.jvm.K2JVMCompiler -script")
+                .startsWith("-Dkotlin.main.kts.compiled.scripts.cache.dir= -classpath kotlin-preloader.jar org.jetbrains.kotlin.preloading.Preloader -cp kotlin-compiler.jar org.jetbrains.kotlin.cli.jvm.K2JVMCompiler -script")
                 .endsWith(".main.kts -- one two three")
     }
 
@@ -106,7 +106,7 @@ class KotlinStepRunnerServiceTest {
         val commandLine = runnerService.makeProgramCommandLine()
         then(commandLine.executablePath).containsIgnoringCase("java")
         then(commandLine.arguments.map { if (it.contains(File.separator)) it.substring(it.lastIndexOf(File.separator) + 1) else it}.joinToString(" "))
-                .isEqualTo("-classpath kotlin-preloader.jar org.jetbrains.kotlin.preloading.Preloader -cp kotlin-compiler.jar org.jetbrains.kotlin.cli.jvm.K2JVMCompiler -script myscript.main.kts -- one two three")
+                .isEqualTo("-Dkotlin.main.kts.compiled.scripts.cache.dir= -classpath kotlin-preloader.jar org.jetbrains.kotlin.preloading.Preloader -cp kotlin-compiler.jar org.jetbrains.kotlin.cli.jvm.K2JVMCompiler -script myscript.main.kts -- one two three")
     }
 
 }

@@ -27,6 +27,7 @@ import jetbrains.buildServer.runner.CommandLineArgumentsUtil
 import jetbrains.buildServer.runner.JavaRunnerConstants
 import jetbrains.buildServer.util.FileUtil
 import java.io.File
+import java.util.*
 
 class KotlinStepRunnerService: BuildServiceAdapter() {
 
@@ -41,7 +42,7 @@ class KotlinStepRunnerService: BuildServiceAdapter() {
                 .withJavaHome(getRunnerParameters().get(JavaRunnerConstants.TARGET_JDK_HOME), getRunnerContext().isVirtualContext())
                 .withBaseDir(getCheckoutDirectory().getAbsolutePath())
                 .withEnvVariables(getEnvironmentVariables())
-                .withJvmArgs(JavaRunnerUtil.extractJvmArgs(getRunnerParameters()))
+                .withJvmArgs(Arrays.asList("-Dkotlin.main.kts.compiled.scripts.cache.dir=") + JavaRunnerUtil.extractJvmArgs(getRunnerParameters()))
                 .withClassPath(getClasspath(lib))
                 .withMainClass("org.jetbrains.kotlin.preloading.Preloader")
                 .withProgramArgs(getProgramArgs(script, lib))
