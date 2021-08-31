@@ -76,6 +76,7 @@ teamcity {
     version = rootProject.extra["teamcityVersion"] as String
 
     server {
+        archiveName = "${rootProject.name}-${rootProject.version}"
         descriptor = file("../teamcity-plugin.xml")
         tokens = mapOf("Version" to pluginVersion)
 
