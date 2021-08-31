@@ -1,6 +1,6 @@
 plugins {
     kotlin("jvm")
-    id ("com.github.rodm.teamcity-server") version "1.1.1"
+    id ("com.github.rodm.teamcity-server") version "1.4"
 }
 
 
@@ -76,6 +76,7 @@ teamcity {
     version = rootProject.extra["teamcityVersion"] as String
 
     server {
+        archiveName = "${rootProject.name}-${rootProject.version}"
         descriptor = file("../teamcity-plugin.xml")
         tokens = mapOf("Version" to pluginVersion)
 
