@@ -21,7 +21,7 @@ val timestamp = SimpleDateFormat("yyMMdd_HHmm").format(Date())
 extra["pluginVersion"] = "${if (project.hasProperty("PluginVersion")) project.property("PluginVersion") else "SNAPSHOT_${timestamp}"}"
 version = extra["pluginVersion"]
 
-extra["teamcityVersion"] = project.findProperty("TeamCityVersion") ?: "2021.1-SNAPSHOT"
+extra["teamcityVersion"] = project.findProperty("TeamCityVersion") ?: "2021.1"
 
 tasks.register<Copy>("pluginZip") {
     from("kotlin-script-runner-server/build/distributions/kotlin-script-runner-$version.zip")
