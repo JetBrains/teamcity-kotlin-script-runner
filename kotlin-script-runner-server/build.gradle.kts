@@ -7,8 +7,7 @@ plugins {
 group = "org.jetbrains.teamcity"
 
 val BUNDLED_TOOL_VERSION = "1.5.0"
-val pluginVersion = rootProject.extra["pluginVersion"]
-version = pluginVersion
+version = rootProject.version
 
 dependencies {
     agent(project(path = ":kotlin-script-runner-agent", configuration = "plugin"))
@@ -78,7 +77,7 @@ teamcity {
     server {
         archiveName = "${rootProject.name}-${rootProject.version}"
         descriptor = file("../teamcity-plugin.xml")
-        tokens = mapOf("Version" to pluginVersion)
+        tokens = mapOf("Version" to project.version)
 
         files {
             into("bundled") {

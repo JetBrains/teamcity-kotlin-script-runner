@@ -4,7 +4,7 @@ plugins {
 
 group = "org.jetbrains.teamcity"
 
-version = rootProject.extra["pluginVersion"]
+version = rootProject.version
 
 dependencies {
     implementation(kotlin("stdlib-jdk8"))
