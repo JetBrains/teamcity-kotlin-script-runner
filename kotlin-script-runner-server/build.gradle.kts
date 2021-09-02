@@ -12,8 +12,8 @@ version = pluginVersion
 
 dependencies {
     agent(project(path = ":kotlin-script-runner-agent", configuration = "plugin"))
-    compile(project(":kotlin-script-runner-common"))
-    compile(kotlin("stdlib"))
+    implementation(project(":kotlin-script-runner-common"))
+    implementation(kotlin("stdlib"))
     provided("org.jetbrains.teamcity.internal:server:${rootProject.extra["teamcityVersion"]}")
     provided("org.jetbrains.teamcity.internal:server-tools:${rootProject.extra["teamcityVersion"]}")
 }
