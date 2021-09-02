@@ -1,6 +1,6 @@
 
 plugins {
-    id ("base")
+    id("com.github.rodm.teamcity-agent") version "1.4"
 }
 
 group = "org.jetbrains.teamcity"
@@ -15,24 +15,28 @@ tasks {
         outputDir.set(File("$buildDir/bundled-download"))
     }
 
-    register<Zip>("includeToolDef") {
-        archiveFileName.set("kotlin.compiler.bundled.zip")
-        destinationDirectory.set(file("$buildDir/bundled"))
-
-        from(zipTree("$buildDir/bundled-download/kotlin-compiler-$BUNDLED_TOOL_VERSION.zip")) {
-            include("kotlinc/**")
-            eachFile {
-                relativePath = RelativePath(true, *relativePath.segments.drop(1).toTypedArray())
-            }
-            includeEmptyDirs = false
-        }
-        from("tools/teamcity-plugin.xml")
+    agentPlugin {
         dependsOn(named("downloadBundled"))
     }
 }
 
+teamcity {
+    agent {
+        archiveName = "kotlin.compiler.bundled.zip"
+        descriptor = "tools/teamcity-plugin.xml"
+        files {
+            from(zipTree("$buildDir/bundled-download/kotlin-compiler-$BUNDLED_TOOL_VERSION.zip")) {
+                includeEmptyDirs = false
+                eachFile {
+                    path = path.split(Regex.fromLiteral("/"), 2)[1]
+                }
+            }
+        }
+    }
+}
+
 artifacts {
-    add("default", tasks.named("includeToolDef"))
+    add("default", tasks.named("agentPlugin"))
 }
 
 abstract class DownloadKotlinTask : DefaultTask() {
