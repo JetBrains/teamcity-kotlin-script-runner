@@ -6,6 +6,10 @@ group = "org.jetbrains.teamcity"
 
 version = rootProject.version
 
+repositories {
+    mavenCentral()
+}
+
 dependencies {
     implementation(kotlin("stdlib-jdk8"))
 }
