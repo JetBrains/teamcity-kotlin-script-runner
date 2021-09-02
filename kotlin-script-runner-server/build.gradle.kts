@@ -45,11 +45,10 @@ tasks {
     compileTestKotlin {
         kotlinOptions.jvmTarget = "1.8"
     }
-}
-
-tasks.getByName<Test>("test") {
-    useTestNG {
-        suites("/src/test/testng-kotlin-script-runner-server.xml")
+    test {
+        useTestNG {
+            suites("/src/test/testng-kotlin-script-runner-server.xml")
+        }
     }
 }
 
