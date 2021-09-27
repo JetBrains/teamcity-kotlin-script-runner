@@ -1,8 +1,10 @@
 import java.text.SimpleDateFormat
 import java.util.Date
+import com.github.jk1.license.render.*
 
 plugins {
     kotlin("jvm") version "1.4.21" apply false
+    id ("com.github.jk1.dependency-license-report") version "1.17"
 }
 
 group = "org.jetbrains.teamcity"
@@ -27,5 +29,9 @@ tasks.register<Copy>("pluginZip") {
     from("kotlin-script-runner-server/build/distributions/kotlin-script-runner-$version.zip")
     into("build/distributions")
     rename("kotlin-script-runner-$version.zip", "kotlin-script-runner.zip")
+}
+
+licenseReport {
+    renderers = arrayOf(JsonReportRenderer("third-party-libs.json"))
 }
 
