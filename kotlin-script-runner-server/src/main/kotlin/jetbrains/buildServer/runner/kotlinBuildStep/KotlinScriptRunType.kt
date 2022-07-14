@@ -100,6 +100,10 @@ class KotlinScriptRunType(val pluginDescriptor: PluginDescriptor, runTypeRegistr
         }
     }
 
+    override fun getTags(): MutableSet<String> {
+        return mutableSetOf("script", "Kotlin")
+    }
+
     companion object {
         const val TYPE = "kotlinScript"
         const val DISPLAY_NAME = "Kotlin Script"
