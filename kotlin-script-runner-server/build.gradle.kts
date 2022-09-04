@@ -1,19 +1,18 @@
 plugins {
     kotlin("jvm")
-    id ("com.github.rodm.teamcity-server") version "1.1.1"
+    id ("com.github.rodm.teamcity-server") version "1.4"
 }
 
 
 group = "org.jetbrains.teamcity"
 
 val BUNDLED_TOOL_VERSION = "1.5.0"
-val pluginVersion = rootProject.extra["pluginVersion"]
-version = pluginVersion
+version = rootProject.version
 
 dependencies {
     agent(project(path = ":kotlin-script-runner-agent", configuration = "plugin"))
-    compile(project(":kotlin-script-runner-common"))
-    compile(kotlin("stdlib"))
+    implementation(project(":kotlin-script-runner-common"))
+    implementation(kotlin("stdlib"))
     provided("org.jetbrains.teamcity.internal:server:${rootProject.extra["teamcityVersion"]}")
     provided("org.jetbrains.teamcity.internal:server-tools:${rootProject.extra["teamcityVersion"]}")
 }
@@ -46,11 +45,10 @@ tasks {
     compileTestKotlin {
         kotlinOptions.jvmTarget = "1.8"
     }
-}
-
-tasks.getByName<Test>("test") {
-    useTestNG {
-        suites("/src/test/testng-kotlin-script-runner-server.xml")
+    test {
+        useTestNG {
+            suites("/src/test/testng-kotlin-script-runner-server.xml")
+        }
     }
 }
 
@@ -76,8 +74,9 @@ teamcity {
     version = rootProject.extra["teamcityVersion"] as String
 
     server {
+        archiveName = "${rootProject.name}-${rootProject.version}"
         descriptor = file("../teamcity-plugin.xml")
-        tokens = mapOf("Version" to pluginVersion)
+        tokens = mapOf("Version" to project.version)
 
         files {
             into("bundled") {

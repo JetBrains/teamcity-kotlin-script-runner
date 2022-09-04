@@ -1,14 +1,14 @@
 plugins {
     kotlin("jvm")
-    id("com.github.rodm.teamcity-agent") version "1.1.1"
+    id("com.github.rodm.teamcity-agent") version "1.4"
 }
 
 group = "org.jetbrains.teamcity"
 
-version = rootProject.extra["pluginVersion"]
+version = rootProject.version
 
 dependencies {
-    compile(project(":kotlin-script-runner-common"))
+    implementation(project(":kotlin-script-runner-common"))
     provided("org.jetbrains.teamcity:agent-api:${rootProject.extra["teamcityVersion"]}")
     provided("org.jetbrains.teamcity.internal:agent:${rootProject.extra["teamcityVersion"]}")
     testImplementation("io.mockk:mockk:1.10.0")
@@ -23,11 +23,10 @@ tasks {
     compileTestKotlin {
         kotlinOptions.jvmTarget = "1.8"
     }
-}
-
-tasks.getByName<Test>("test") {
-    useTestNG {
-        suites("/src/test/testng-kotlin-script-runner-agent.xml")
+    test {
+        useTestNG {
+            suites("/src/test/testng-kotlin-script-runner-agent.xml")
+        }
     }
 }
 
