@@ -109,4 +109,8 @@ class KotlinScriptRunType(val pluginDescriptor: PluginDescriptor, runTypeRegistr
         const val DISPLAY_NAME = "Kotlin Script"
         const val DESCRIPTION = "Kotlin Script runner"
     }
+
+    override fun getIconUrl(): String {
+        return this.pluginDescriptor.getPluginResourcesPath("kotlin_script.svg")
+    }
 }
