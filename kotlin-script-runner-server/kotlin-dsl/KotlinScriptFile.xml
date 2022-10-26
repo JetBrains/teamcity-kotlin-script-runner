@@ -52,7 +52,7 @@
   <examples>
     <example>
       <description>
-        Adds a Kotlin script build step with [defualt Kotlin compiler](https://www.jetbrains.com/help/teamcity/?Kotlin+Script#Prerequisites) and default JVM.
+        Adds a Kotlin script build step with [default Kotlin compiler](https://www.jetbrains.com/help/teamcity/?Kotlin+Script#Prerequisites) and default JVM.
       </description>
       <code>
         kotlinScript {
