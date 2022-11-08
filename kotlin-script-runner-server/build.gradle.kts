@@ -78,6 +78,7 @@ teamcity {
     server {
         descriptor = file("../teamcity-plugin.xml")
         tokens = mapOf("Version" to pluginVersion)
+        archiveName = "kotlin-script-runner"
 
         files {
             into("bundled") {
