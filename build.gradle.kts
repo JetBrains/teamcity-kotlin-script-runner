@@ -26,9 +26,8 @@ version = extra["pluginVersion"]
 extra["teamcityVersion"] = project.findProperty("TeamCityVersion") ?: "2021.1-SNAPSHOT"
 
 tasks.register<Copy>("pluginZip") {
-    from("kotlin-script-runner-server/build/distributions/kotlin-script-runner-$version.zip")
+    from("kotlin-script-runner-server/build/distributions/kotlin-script-runner.zip")
     into("build/distributions")
-    rename("kotlin-script-runner-$version.zip", "kotlin-script-runner.zip")
 }
 
 licenseReport {
