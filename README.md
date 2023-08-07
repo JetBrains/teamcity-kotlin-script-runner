@@ -1,3 +1,5 @@
+[![official JetBrains project](https://jb.gg/badges/official-flat-square.svg)](https://confluence.jetbrains.com/display/ALL/JetBrains+on+GitHub)
+
 # TeamCity Kotlin Script Build Step plugin
 
 This plugin introduces a new Kotlin Script build runner that allows users to use platform independent Kotlin scripts. 
