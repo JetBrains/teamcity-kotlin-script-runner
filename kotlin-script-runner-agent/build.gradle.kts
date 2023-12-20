@@ -1,6 +1,6 @@
 plugins {
     kotlin("jvm")
-    id("com.github.rodm.teamcity-agent") version "1.4.1"
+    id("com.github.rodm.teamcity-agent") version "1.5.2"
 }
 
 group = "org.jetbrains.teamcity"
