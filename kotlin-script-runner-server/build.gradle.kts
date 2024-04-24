@@ -1,6 +1,6 @@
 plugins {
     kotlin("jvm")
-    id ("com.github.rodm.teamcity-server") version "1.4.1"
+    id ("com.github.rodm.teamcity-server") version "1.5.2"
 }
 
 
@@ -74,6 +74,7 @@ abstract class DownloadKotlinTask : DefaultTask() {
 teamcity {
 
     version = rootProject.extra["teamcityVersion"] as String
+    allowSnapshotVersions = true
 
     server {
         descriptor = file("../teamcity-plugin.xml")

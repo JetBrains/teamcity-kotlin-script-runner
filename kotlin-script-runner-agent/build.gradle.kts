@@ -1,6 +1,6 @@
 plugins {
     kotlin("jvm")
-    id("com.github.rodm.teamcity-agent") version "1.4.1"
+    id("io.github.rodm.teamcity-agent") version "1.5.2"
 }
 
 group = "org.jetbrains.teamcity"
@@ -12,6 +12,7 @@ dependencies {
     provided("org.jetbrains.teamcity:agent-api:${rootProject.extra["teamcityVersion"]}")
     provided("org.jetbrains.teamcity.internal:agent:${rootProject.extra["teamcityVersion"]}")
     testImplementation("io.mockk:mockk:1.10.0")
+    testImplementation("net.bytebuddy:byte-buddy:1.14.2")
     testImplementation("org.testng:testng:6.8")
     testImplementation("org.assertj:assertj-core:2.2.0")
 }
@@ -34,6 +35,7 @@ tasks.getByName<Test>("test") {
 teamcity {
 
     version = rootProject.extra["teamcityVersion"] as String
+    allowSnapshotVersions = true
 
     agent {
         descriptor {
