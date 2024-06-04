@@ -46,3 +46,12 @@ teamcity {
     }
 
 }
+
+tasks {
+    agentPlugin {
+        archiveVersion.convention(null as String?)
+        archiveVersion.set(null as String?)
+        archiveBaseName.set("kotlin-script-runner-agent")
+    }
+}
+
