@@ -7,7 +7,7 @@ import java.nio.file.Path
 import java.nio.file.Paths
 
 plugins {
-    kotlin("jvm") version "1.4.21" apply false
+    kotlin("jvm") version "1.8.0" apply false
     id ("com.github.jk1.dependency-license-report") version "1.17"
 }
 
@@ -32,7 +32,7 @@ allprojects {
 val timestamp = SimpleDateFormat("yyMMdd_HHmm").format(Date())
 
 extra["pluginVersion"] = "${if (project.hasProperty("PluginVersion")) project.property("PluginVersion") else "SNAPSHOT_${timestamp}"}"
-version = extra["pluginVersion"]
+version = extra["pluginVersion"]!!
 
 extra["teamcityVersion"] = anyParam("teamcityVersion") ?: "2022.10-SNAPSHOT"
 

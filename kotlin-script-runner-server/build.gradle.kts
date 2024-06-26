@@ -8,12 +8,12 @@ group = "org.jetbrains.teamcity"
 
 val BUNDLED_TOOL_VERSION = "1.7.10"
 val pluginVersion = rootProject.extra["pluginVersion"]
-version = pluginVersion
+version = pluginVersion!!
 
 dependencies {
     agent(project(path = ":kotlin-script-runner-agent", configuration = "plugin"))
-    compile(project(":kotlin-script-runner-common"))
-    compile(kotlin("stdlib"))
+    api(project(":kotlin-script-runner-common"))
+    api(kotlin("stdlib"))
     provided("org.jetbrains.teamcity.internal:server:${rootProject.extra["teamcityVersion"]}")
     provided("org.jetbrains.teamcity.internal:server-tools:${rootProject.extra["teamcityVersion"]}")
 }

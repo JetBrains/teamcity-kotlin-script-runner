@@ -5,10 +5,11 @@ plugins {
 
 group = "org.jetbrains.teamcity"
 
-version = rootProject.extra["pluginVersion"]
+version = rootProject.extra["pluginVersion"]!!
 
 dependencies {
-    compile(project(":kotlin-script-runner-common"))
+    api(project(":kotlin-script-runner-common"))
+    project(":kotlin-script-extension-host")
     provided("org.jetbrains.teamcity:agent-api:${rootProject.extra["teamcityVersion"]}")
     provided("org.jetbrains.teamcity.internal:agent:${rootProject.extra["teamcityVersion"]}")
     testImplementation("io.mockk:mockk:1.10.0")
