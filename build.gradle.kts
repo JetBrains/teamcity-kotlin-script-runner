@@ -7,7 +7,7 @@ import java.nio.file.Path
 import java.nio.file.Paths
 
 plugins {
-    kotlin("jvm") version "1.8.0" apply false
+    kotlin("jvm") version "1.6.10" apply false
     id ("com.github.jk1.dependency-license-report") version "1.17"
 }
 

@@ -1,10 +1,9 @@
 package org.jetbrains.teamcity
 
-import org.example.ServiceMessages
 import kotlin.script.experimental.annotations.KotlinScript
 
 @KotlinScript(
     fileExtension = "teamcity.buildstep.kts",
-    compilationConfiguration = TeamCityStepScriptCompilationConfiguration::class
+    compilationConfiguration = TeamCityStepScriptCompilationConfiguration::class,
 )
-abstract class TeamCityScriptDefinition
+open class TeamCityScriptDefinition(args: Any)

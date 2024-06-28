@@ -9,6 +9,7 @@ version = rootProject.extra["pluginVersion"]!!
 
 dependencies {
     api(project(":kotlin-script-runner-common"))
+    api(project(":kotlin-script-extension"))
     provided("org.jetbrains.teamcity:agent-api:${rootProject.extra["teamcityVersion"]}")
     provided("org.jetbrains.teamcity.internal:agent:${rootProject.extra["teamcityVersion"]}")
     testImplementation("io.mockk:mockk:1.10.0")

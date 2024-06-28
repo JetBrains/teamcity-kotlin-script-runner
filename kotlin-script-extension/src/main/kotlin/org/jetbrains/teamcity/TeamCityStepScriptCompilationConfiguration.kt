@@ -17,6 +17,7 @@ class TeamCityStepScriptCompilationConfiguration : ScriptCompilationConfiguratio
     ide {
         acceptedLocations(ScriptAcceptedLocation.Everywhere)
     }
+    compilerOptions.append("-Xadd-modules=ALL-MODULE-PATH")
     baseClass(TeamCityScriptDefinition::class)
     jvm {
         dependenciesFromCurrentContext(wholeClasspath = true)

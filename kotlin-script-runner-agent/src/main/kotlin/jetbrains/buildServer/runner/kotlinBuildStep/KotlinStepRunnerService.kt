@@ -1,8 +1,7 @@
-
-
 package jetbrains.buildServer.runner.kotlinBuildStep
 
 
+import com.intellij.util.PathUtil
 import jetbrains.buildServer.RunBuildException
 import jetbrains.buildServer.agent.ToolCannotBeFoundException
 import jetbrains.buildServer.agent.runner.BuildServiceAdapter
@@ -12,10 +11,11 @@ import jetbrains.buildServer.agent.runner.ProgramCommandLine
 import jetbrains.buildServer.runner.CommandLineArgumentsUtil
 import jetbrains.buildServer.runner.JavaRunnerConstants
 import jetbrains.buildServer.util.FileUtil
+import org.jetbrains.teamcity.TeamCityScriptDefinition
 import java.io.File
 import java.util.*
 
-class KotlinStepRunnerService: BuildServiceAdapter() {
+class KotlinStepRunnerService : BuildServiceAdapter() {
 
     override fun makeProgramCommandLine(): ProgramCommandLine {
         val scriptFile = getOrCreateScript()
@@ -25,28 +25,51 @@ class KotlinStepRunnerService: BuildServiceAdapter() {
     protected fun createCommandLine(script: String): ProgramCommandLine {
         val lib = File(getToolPath(), LIB_DIR)
         return JavaCommandLineBuilder()
-                .withJavaHome(getRunnerParameters().get(JavaRunnerConstants.TARGET_JDK_HOME), getRunnerContext().isVirtualContext())
-                .withBaseDir(getCheckoutDirectory().getAbsolutePath())
-                .withEnvVariables(getEnvironmentVariables())
-                .withJvmArgs(Arrays.asList("-Dkotlin.main.kts.compiled.scripts.cache.dir=") + JavaRunnerUtil.extractJvmArgs(getRunnerParameters()))
-                .withClassPath(getClasspath(lib))
-                .withMainClass("org.jetbrains.kotlin.preloading.Preloader")
-                .withProgramArgs(getProgramArgs(script, lib))
-                .withWorkingDir(getWorkingDirectory().getAbsolutePath())
-                .build()
+            .withJavaHome(
+                getRunnerParameters().get(JavaRunnerConstants.TARGET_JDK_HOME),
+                getRunnerContext().isVirtualContext()
+            )
+            .withBaseDir(getCheckoutDirectory().getAbsolutePath())
+            .withEnvVariables(getEnvironmentVariables())
+            .withJvmArgs(
+                Arrays.asList("-Dkotlin.main.kts.compiled.scripts.cache.dir=") + JavaRunnerUtil.extractJvmArgs(
+                    getRunnerParameters()
+                )
+            )
+            .withClassPath(getClasspath(lib))
+            .withMainClass("org.jetbrains.kotlin.preloading.Preloader")
+            .withProgramArgs(getProgramArgs(script, lib))
+            .withWorkingDir(getWorkingDirectory().getAbsolutePath())
+            .build()
     }
 
     private fun getToolPath(): String {
         return runnerParameters[RunnerParamNames.KOTLIN_PATH]
-                ?: throw ToolCannotBeFoundException("Kotlin compiler tool path is missing in the runner settings")
+            ?: throw ToolCannotBeFoundException("Kotlin compiler tool path is missing in the runner settings")
     }
 
     private fun getProgramArgs(script: String, lib: File): List<String> {
-        val scriptArgs = listOf("-cp", File(lib, "kotlin-compiler.jar").canonicalPath, "org.jetbrains.kotlin.cli.jvm.K2JVMCompiler", "-script", script)
+        val scriptArgs = mutableListOf(
+            "-cp",
+            File(lib, "kotlin-compiler.jar").canonicalPath,
+            "org.jetbrains.kotlin.cli.jvm.K2JVMCompiler",
+            "-script",
+            script
+        )
+        if (script.endsWith("teamcity.buildstep.kts")) {
+            scriptArgs.addAll(
+                listOf(
+                    "-cp",
+                    File(PathUtil.getJarPathForClass(TeamCityScriptDefinition::class.java)).canonicalPath,
+                    "-script-templates",
+                    TeamCityScriptDefinition::class.java.canonicalName
+                )
+            )
+        }
         val ktsArgs = getRunnerParameters()[RunnerParamNames.KOTLIN_ARGS]
-        return  if(ktsArgs.isNullOrBlank()) scriptArgs
-                else if (ktsArgs.startsWith("-- ")) scriptArgs + CommandLineArgumentsUtil.extractArguments(ktsArgs)
-                else scriptArgs + CommandLineArgumentsUtil.extractArguments("-- " + ktsArgs)
+        return if (ktsArgs.isNullOrBlank()) scriptArgs
+        else if (ktsArgs.startsWith("-- ")) scriptArgs + CommandLineArgumentsUtil.extractArguments(ktsArgs)
+        else scriptArgs + CommandLineArgumentsUtil.extractArguments("-- " + ktsArgs)
     }
 
     private fun getClasspath(lib: File): String {
@@ -74,6 +97,6 @@ class KotlinStepRunnerService: BuildServiceAdapter() {
 
     protected fun getScriptContent(): String {
         return getRunnerContext().getRunnerParameters().get(RunnerParamNames.SCRIPT_CONTENT)
-                ?: throw RunBuildException("Kotlin script content is not specified")
+            ?: throw RunBuildException("Kotlin script content is not specified")
     }
 }
