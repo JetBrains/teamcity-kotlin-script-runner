@@ -8,6 +8,7 @@ import kotlin.script.experimental.dependencies.Repository
 import kotlin.script.experimental.jvm.dependenciesFromCurrentContext
 import kotlin.script.experimental.jvm.jvm
 import org.jetbrains.kotlin.mainKts.Import
+import org.jetbrains.kotlin.mainKts.MainKtsConfigurator
 
 class TeamCityStepScriptCompilationConfiguration : ScriptCompilationConfiguration({
     defaultImports(
@@ -17,6 +18,9 @@ class TeamCityStepScriptCompilationConfiguration : ScriptCompilationConfiguratio
         CompilerOptions::class,
         Repository::class,
     )
+    refineConfiguration {
+        onAnnotations(DependsOn::class, Repository::class, Import::class, CompilerOptions::class, handler = MainKtsConfigurator())
+    }
     ide {
         acceptedLocations(ScriptAcceptedLocation.Everywhere)
     }
