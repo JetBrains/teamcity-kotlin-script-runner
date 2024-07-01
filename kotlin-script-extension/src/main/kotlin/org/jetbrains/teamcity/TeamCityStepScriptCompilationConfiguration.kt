@@ -1,17 +1,20 @@
 package org.jetbrains.teamcity
 
 import org.example.ServiceMessages
+import org.jetbrains.kotlin.mainKts.CompilerOptions
 import kotlin.script.experimental.api.*
 import kotlin.script.experimental.dependencies.DependsOn
 import kotlin.script.experimental.dependencies.Repository
 import kotlin.script.experimental.jvm.dependenciesFromCurrentContext
 import kotlin.script.experimental.jvm.jvm
+import org.jetbrains.kotlin.mainKts.Import
 
 class TeamCityStepScriptCompilationConfiguration : ScriptCompilationConfiguration({
     defaultImports(
         ServiceMessages::class,
         DependsOn::class,
-        // Import::class,
+        Import::class,
+        CompilerOptions::class,
         Repository::class,
     )
     ide {

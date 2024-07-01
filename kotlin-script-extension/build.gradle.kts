@@ -20,6 +20,7 @@ dependencies {
     compileOnly("org.jetbrains.kotlin:kotlin-scripting-jvm")
     compileOnly("org.jetbrains.kotlin:kotlin-scripting-jvm-host")
     api("org.jetbrains.kotlin:kotlin-stdlib:1.5.1")
+    api("org.jetbrains.kotlin:kotlin-main-kts:1.6.0")
     api("org.jetbrains.kotlin:kotlin-scripting-dependencies")
     api("org.jetbrains.kotlin:kotlin-scripting-dependencies-maven")
     api("org.example:service-messages-prototype:1.0")
