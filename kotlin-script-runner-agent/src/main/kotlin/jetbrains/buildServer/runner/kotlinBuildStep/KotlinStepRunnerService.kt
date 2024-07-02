@@ -60,7 +60,8 @@ class KotlinStepRunnerService : BuildServiceAdapter() {
             scriptArgs.addAll(
                 listOf(
                     "-cp",
-                    File(PathUtil.getJarPathForClass(TeamCityScriptDefinition::class.java)).canonicalPath,
+                    "${File(PathUtil.getJarPathForClass(TeamCityScriptDefinition::class.java)).canonicalPath}:" +
+                            File(lib, "kotlin-main-kts.jar").canonicalPath,
                     "-script-templates",
                     TeamCityScriptDefinition::class.java.canonicalName
                 )
