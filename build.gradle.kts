@@ -1,6 +1,7 @@
 import java.text.SimpleDateFormat
 import java.util.Date
 import com.github.jk1.license.render.*
+import com.github.jk1.license.filter.*
 import java.util.*
 import java.io.FileInputStream
 import java.nio.file.Path
@@ -42,8 +43,13 @@ tasks.register<Copy>("pluginZip") {
 }
 
 licenseReport {
-    renderers = arrayOf(JsonReportRenderer("third-party-libs.json"))
+    renderers = arrayOf(JsonReportRenderer("third-party-libraries.json"))
+    excludes = arrayOf("org.jetbrains.*", "com.jetbrains.*", ".*jackson-bom*")
+    filters = arrayOf<DependencyFilter>(
+        LicenseBundleNormalizer("${project.rootDir}/license-third-party-normalizer.json", false)
+    )
 }
+
 
 
 fun anyParamPath(vararg names: String): Path? {
