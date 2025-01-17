@@ -93,6 +93,7 @@ class KotlinScriptRunType(val pluginDescriptor: PluginDescriptor, runTypeRegistr
         const val DISPLAY_NAME = "Kotlin Script"
         const val DESCRIPTION = "Kotlin Script runner"
         private const val DOCKER_WRAPPER = "dockerWrapper"
+        private const val DOCKER_SUPPORT_ENABLED = "teamcity.plugin.kotlinScript.dockerSupport.enabled"
     }
 
     override fun getIconUrl(): String {
@@ -100,7 +101,10 @@ class KotlinScriptRunType(val pluginDescriptor: PluginDescriptor, runTypeRegistr
     }
 
     override fun supports(runTypeExtension: RunTypeExtension): Boolean {
-        if (runTypeExtension is PositionAware && DOCKER_WRAPPER == (runTypeExtension as PositionAware).orderId) {
+        if (TeamCityProperties.getBoolean(DOCKER_SUPPORT_ENABLED) &&
+            runTypeExtension is PositionAware &&
+            DOCKER_WRAPPER == (runTypeExtension as PositionAware).orderId
+        ) {
             return true
         }
         return super.supports(runTypeExtension)
