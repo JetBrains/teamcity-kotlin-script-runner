@@ -2,10 +2,8 @@
 
 package jetbrains.buildServer.runner.kotlinBuildStep
 
-import jetbrains.buildServer.serverSide.InvalidProperty
-import jetbrains.buildServer.serverSide.PropertiesProcessor
-import jetbrains.buildServer.serverSide.RunType
-import jetbrains.buildServer.serverSide.RunTypeRegistry
+import jetbrains.buildServer.serverSide.*
+import jetbrains.buildServer.util.positioning.PositionAware
 import jetbrains.buildServer.web.openapi.PluginDescriptor
 
 class KotlinScriptRunType(val pluginDescriptor: PluginDescriptor, runTypeRegistry: RunTypeRegistry) : RunType() {
@@ -94,9 +92,21 @@ class KotlinScriptRunType(val pluginDescriptor: PluginDescriptor, runTypeRegistr
         const val TYPE = "kotlinScript"
         const val DISPLAY_NAME = "Kotlin Script"
         const val DESCRIPTION = "Kotlin Script runner"
+        private const val DOCKER_WRAPPER = "dockerWrapper"
+        private const val DOCKER_SUPPORT_ENABLED = "teamcity.plugin.kotlinScript.dockerSupport.enabled"
     }
 
     override fun getIconUrl(): String {
         return this.pluginDescriptor.getPluginResourcesPath("kotlin_script.svg")
+    }
+
+    override fun supports(runTypeExtension: RunTypeExtension): Boolean {
+        if (TeamCityProperties.getBoolean(DOCKER_SUPPORT_ENABLED) &&
+            runTypeExtension is PositionAware &&
+            DOCKER_WRAPPER == (runTypeExtension as PositionAware).orderId
+        ) {
+            return true
+        }
+        return super.supports(runTypeExtension)
     }
 }
