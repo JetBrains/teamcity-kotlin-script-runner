@@ -6,7 +6,7 @@ plugins {
 
 group = "org.jetbrains.teamcity"
 
-val BUNDLED_TOOL_VERSION = "1.7.10"
+val BUNDLED_TOOL_VERSION = "2.1.10"
 val pluginVersion = rootProject.extra["pluginVersion"]
 version = pluginVersion!!
 
