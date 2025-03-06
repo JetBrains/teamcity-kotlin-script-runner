@@ -101,7 +101,7 @@ class KotlinScriptRunType(val pluginDescriptor: PluginDescriptor, runTypeRegistr
     }
 
     override fun supports(runTypeExtension: RunTypeExtension): Boolean {
-        if (TeamCityProperties.getBoolean(DOCKER_SUPPORT_ENABLED) &&
+        if (TeamCityProperties.getBooleanOrTrue(DOCKER_SUPPORT_ENABLED) &&
             runTypeExtension is PositionAware &&
             DOCKER_WRAPPER == (runTypeExtension as PositionAware).orderId
         ) {
