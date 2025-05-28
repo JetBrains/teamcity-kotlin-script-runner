@@ -20,8 +20,18 @@ class KotlinStepRunnerFactory() : MultiCommandBuildSessionFactory {
             commandsIterator =
                 sequence {
                     if (runnerContext.isVirtualContext) {
-                        println("checking java....")
-                        //yieldAll(_dockerJavaExecutableProvider.getCommandExecutionSequence())
+                        var javaExists = false
+                        val javaDiscoveryService = ContainerJavaDiscoveryService {
+                            javaExists = it
+                        }
+                        javaDiscoveryService.initialize(runnerContext.build, runnerContext)
+
+                        val javaDiscoveryCommandExecution = CommandExecutionAdapter(javaDiscoveryService)
+                        yield(javaDiscoveryCommandExecution)
+
+                        if (!javaExists) {
+                            print("download it")
+                        }
                     }
                     yield(kotlinStepExecutionAdapter)
                 }.iterator()
