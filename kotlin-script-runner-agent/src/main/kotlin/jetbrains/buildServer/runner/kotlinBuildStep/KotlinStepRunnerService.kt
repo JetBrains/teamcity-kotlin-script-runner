@@ -4,6 +4,7 @@ package jetbrains.buildServer.runner.kotlinBuildStep
 
 
 import jetbrains.buildServer.RunBuildException
+import jetbrains.buildServer.agent.BuildRunnerContext
 import jetbrains.buildServer.agent.ToolCannotBeFoundException
 import jetbrains.buildServer.agent.runner.BuildServiceAdapter
 import jetbrains.buildServer.agent.runner.JavaCommandLineBuilder
@@ -15,8 +16,7 @@ import jetbrains.buildServer.util.FileUtil
 import java.io.File
 import java.util.*
 
-class KotlinStepRunnerService: BuildServiceAdapter() {
-
+class KotlinStepRunnerService(): BuildServiceAdapter() {
     override fun makeProgramCommandLine(): ProgramCommandLine {
         val scriptFile = getOrCreateScript()
         return createCommandLine(scriptFile)
