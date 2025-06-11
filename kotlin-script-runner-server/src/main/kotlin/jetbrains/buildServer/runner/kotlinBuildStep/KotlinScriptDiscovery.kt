@@ -3,7 +3,6 @@ package jetbrains.buildServer.runner.kotlinBuildStep
 import jetbrains.buildServer.serverSide.BuildTypeSettings
 import jetbrains.buildServer.serverSide.discovery.BreadthFirstRunnerDiscoveryExtension
 import jetbrains.buildServer.serverSide.discovery.DiscoveredObject
-import jetbrains.buildServer.util.CollectionsUtil
 import jetbrains.buildServer.util.browser.Browser
 import jetbrains.buildServer.util.browser.Element
 import jetbrains.buildServer.util.positioning.PositionAware
@@ -12,7 +11,7 @@ import jetbrains.buildServer.util.positioning.PositionConstraint
 class KotlinScriptDiscovery: BreadthFirstRunnerDiscoveryExtension(), PositionAware {
     override fun discoverRunnersInDirectory(dir: Element, filesAndDirs: MutableList<Element>): MutableList<DiscoveredObject> {
         val result = mutableListOf<DiscoveredObject>()
-        if (!dir.fullName.toLowerCase().startsWith(".teamcity")) {
+        if (!dir.fullName.lowercase().startsWith(".teamcity")) {
             for (element in filesAndDirs) {
                 if (skipElement(element)) continue
                 result.add(DiscoveredObject(KOTLIN_RUNNER_TYPE, mapOf(
@@ -39,7 +38,7 @@ class KotlinScriptDiscovery: BreadthFirstRunnerDiscoveryExtension(), PositionAwa
     private fun skipElement(element: Element): Boolean {
         if (!element.isLeaf)
             return true
-        val extension = element.name.toLowerCase().substringAfter(".")
+        val extension = element.name.lowercase().substringAfter(".")
         return !KOTLIN_RUNNER_DETECTABLE_EXTENSIONS.contains(extension)
     }
 
