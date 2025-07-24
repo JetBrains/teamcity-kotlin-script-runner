@@ -8,7 +8,7 @@ import java.nio.file.Path
 import java.nio.file.Paths
 
 plugins {
-    kotlin("jvm") version "1.5.30" apply false
+    kotlin("jvm") version "1.9.22" apply false
     id ("com.github.jk1.dependency-license-report") version "1.17"
 }
 
@@ -38,6 +38,7 @@ version = extra["pluginVersion"]!!
 extra["teamcityVersion"] = anyParam("teamcityVersion") ?: "2024.12"
 
 tasks.register<Copy>("pluginZip") {
+    dependsOn(":kotlin-script-runner-server:serverPlugin")
     from("kotlin-script-runner-server/build/distributions/kotlin-script-runner.zip")
     into("build/distributions")
 }
