@@ -33,7 +33,7 @@ class KotlinServerToolProviderTest: BaseTestCase() {
 
     public fun `test tool versions`() {
         then(provider.defaultBundledVersionId).isEqualTo(ToolVersionIdHelper.getToolId(KotlinToolType.INSTANCE, "bundled"))
-        then(provider.bundledToolVersions.map { it.version }).isEqualTo(listOf("2.1.10"))
+        then(provider.bundledToolVersions.map { it.version }).isEqualTo(listOf("2.2.20"))
         then(provider.availableToolVersions).isNotEmpty()
     }
 
