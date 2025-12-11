@@ -8,14 +8,17 @@ group = "org.jetbrains.teamcity"
 
 val BUNDLED_TOOL_VERSION = "2.1.10"
 val pluginVersion = rootProject.extra["pluginVersion"]
+val teamcityVersion = rootProject.extra["teamcityVersion"]
 version = pluginVersion!!
 
 dependencies {
+    provided("com.zaxxer:HikariCP:4.0.3")
+    implementation(platform("org.jetbrains.teamcity:bom:$teamcityVersion"))
     agent(project(path = ":kotlin-script-runner-agent", configuration = "plugin"))
     api(project(":kotlin-script-runner-common"))
     api(kotlin("stdlib"))
-    provided("org.jetbrains.teamcity.internal:server:${rootProject.extra["teamcityVersion"]}")
-    provided("org.jetbrains.teamcity.internal:server-tools:${rootProject.extra["teamcityVersion"]}")
+    provided("org.jetbrains.teamcity.internal:server")
+    provided("org.jetbrains.teamcity.internal:server-tools")
 }
 
 tasks {
