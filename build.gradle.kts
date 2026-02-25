@@ -8,8 +8,8 @@ import java.nio.file.Path
 import java.nio.file.Paths
 
 plugins {
-    kotlin("jvm") version "1.9.22" apply false
-    id ("com.github.jk1.dependency-license-report") version "1.17"
+    kotlin("jvm") version "2.0.21" apply false
+    id ("com.github.jk1.dependency-license-report") version "2.9"
 }
 
 initializeWorkspace()
