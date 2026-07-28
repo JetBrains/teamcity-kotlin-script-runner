@@ -37,6 +37,18 @@ version = extra["pluginVersion"]!!
 
 extra["teamcityVersion"] = anyParam("teamcityVersion") ?: "2024.12"
 
+subprojects {
+    configurations.all {
+        resolutionStrategy.eachDependency {
+            if ((requested.group == "org.jetbrains.teamcity" || requested.group == "org.jetbrains.teamcity.internal") &&
+                requested.version.isNullOrEmpty()) {
+                useVersion(rootProject.extra["teamcityVersion"] as String)
+                because("TeamCity artifacts inherit core module versions from the TeamCity BOM")
+            }
+        }
+    }
+}
+
 tasks.register<Copy>("pluginZip") {
     dependsOn(":kotlin-script-runner-server:serverPlugin")
     from("kotlin-script-runner-server/build/distributions/kotlin-script-runner.zip")
