@@ -58,7 +58,7 @@
         kotlinScript {
             name = "My Kotlin Script step"
             content = """
-                // Koltin script content
+                // Kotlin script content
                 println("Hello, World")
             """.trimIndent()
         }
@@ -76,7 +76,7 @@
             name = "My Kotlin Script step"
             workingDir = "data/"
             content = """
-                // Koltin script content
+                // Kotlin script content
                 println("Hello, World")
             """.trimIndent()
 
@@ -99,7 +99,7 @@
             name = "My Kotlin Script step"
             workingDir = "data/"
             content = """
-                // Koltin script content
+                // Kotlin script content
                 println("Hello, World")
             """.trimIndent()
 
