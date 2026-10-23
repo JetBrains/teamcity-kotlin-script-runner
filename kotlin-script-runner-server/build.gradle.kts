@@ -98,6 +98,11 @@ teamcity {
                 from("kotlin-dsl")
             }
         }
+        files {
+            into("ui-schemas") {
+                from("ui-schemas")
+            }
+        }
     }
 
 }
