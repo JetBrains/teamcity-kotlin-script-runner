@@ -1,0 +1,56 @@
+{
+  "title": "Kotlin Script - Custom Script",
+  "type": "VerticalLayout",
+  "elements": [
+    {
+      "type": "InputPathControl",
+      "label": "Working directory",
+      "scope": "#/properties/working-directory",
+      "options": {
+        "placeholder": "repository root"
+      }
+    },
+    {
+      "type": "Control",
+      "label": "Kotlin script",
+      "scope": "#/properties/content",
+      "options": {
+        "multi": true,
+        "description": "A Kotlin script code"
+      }
+    },
+    {
+      "type": "DockerImageControl",
+      "label": "Docker image",
+      "scope": "#/properties/docker-image"
+    },
+    {
+      "type": "JavaVersionPickerControl",
+      "label": "JDK",
+      "scope": "#/properties/jdk-home"
+    },
+    {
+      "type": "AdvancedSettingsSection",
+      "elements": [
+        {
+          "type": "ToolVersionControl",
+          "label": "Kotlin compiler",
+          "scope": "#/properties/compiler",
+          "options": {
+            "toolType": "kotlin.compiler"
+          }
+        },
+        {
+          "type": "Control",
+          "label": "Script parameters",
+          "scope": "#/properties/arguments"
+        },
+        {
+          "type": "Control",
+          "label": "JVM command line parameters",
+          "scope": "#/properties/jvm-args"
+        }
+      ]
+    }
+  ]
+}
