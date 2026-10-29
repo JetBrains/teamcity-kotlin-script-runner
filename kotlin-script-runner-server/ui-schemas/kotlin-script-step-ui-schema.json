@@ -11,6 +11,15 @@
       }
     },
     {
+      "type": "ToolVersionControl",
+      "label": "Kotlin compiler",
+      "scope": "#/properties/compiler",
+      "options": {
+        "toolType": "kotlin.compiler",
+        "placeholder": "/opt/agent/kotlinc"
+      }
+    },
+    {
       "type": "Control",
       "label": "Kotlin script",
       "scope": "#/properties/content",
@@ -32,14 +41,6 @@
     {
       "type": "AdvancedSettingsSection",
       "elements": [
-        {
-          "type": "ToolVersionControl",
-          "label": "Kotlin compiler",
-          "scope": "#/properties/compiler",
-          "options": {
-            "toolType": "kotlin.compiler"
-          }
-        },
         {
           "type": "Control",
           "label": "Script parameters",
