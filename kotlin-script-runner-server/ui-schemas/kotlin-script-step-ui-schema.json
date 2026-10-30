@@ -7,16 +7,8 @@
       "label": "Working directory",
       "scope": "#/properties/working-directory",
       "options": {
-        "placeholder": "repository root"
-      }
-    },
-    {
-      "type": "ToolVersionControl",
-      "label": "Kotlin compiler",
-      "scope": "#/properties/compiler",
-      "options": {
-        "toolType": "kotlin.compiler",
-        "placeholder": "/opt/agent/kotlinc"
+        "placeholder": "repository root",
+        "description": "Optional, set if differs from the checkout directory. [Learn more](https://www.jetbrains.com/help/teamcity/?Build+Working+Directory)."
       }
     },
     {
@@ -41,6 +33,15 @@
     {
       "type": "AdvancedSettingsSection",
       "elements": [
+        {
+          "type": "ToolVersionControl",
+          "label": "Kotlin compiler",
+          "scope": "#/properties/compiler",
+          "options": {
+            "toolType": "kotlin.compiler",
+            "placeholder": "/opt/agent/kotlinc"
+          }
+        },
         {
           "type": "Control",
           "label": "Script parameters",
