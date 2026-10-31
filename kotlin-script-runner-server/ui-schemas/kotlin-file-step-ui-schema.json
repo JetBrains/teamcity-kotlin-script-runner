@@ -1,0 +1,58 @@
+{
+  "title": "Kotlin Script - Script File",
+  "type": "VerticalLayout",
+  "elements": [
+    {
+      "type": "InputPathControl",
+      "label": "Working directory",
+      "scope": "#/properties/working-directory",
+      "options": {
+        "placeholder": "repository root",
+        "description": "Optional, set if differs from the checkout directory. [Learn more](https://www.jetbrains.com/help/teamcity/?Build+Working+Directory)."
+      }
+    },
+    {
+      "type": "InputPathControl",
+      "label": "Kotlin script file",
+      "scope": "#/properties/path",
+      "options": {
+        "onlyDirectories": false,
+        "description": "To support annotation-based references to Maven dependencies, the provided file must have the *.main.kts extension. [Learn more](https://www.jetbrains.com/help/teamcity/?kotlin-script-file)."
+      }
+    },
+    {
+      "type": "DockerImageControl",
+      "label": "Docker image",
+      "scope": "#/properties/docker-image"
+    },
+    {
+      "type": "JavaVersionPickerControl",
+      "label": "JDK",
+      "scope": "#/properties/jdk-home"
+    },
+    {
+      "type": "AdvancedSettingsSection",
+      "elements": [
+        {
+          "type": "ToolVersionControl",
+          "label": "Kotlin compiler",
+          "scope": "#/properties/compiler",
+          "options": {
+            "toolType": "kotlin.compiler",
+            "placeholder": "/opt/agent/kotlinc"
+          }
+        },
+        {
+          "type": "Control",
+          "label": "Script parameters",
+          "scope": "#/properties/arguments"
+        },
+        {
+          "type": "Control",
+          "label": "JVM command line parameters",
+          "scope": "#/properties/jvm-args"
+        }
+      ]
+    }
+  ]
+}
