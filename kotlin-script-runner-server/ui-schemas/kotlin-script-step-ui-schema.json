@@ -17,7 +17,7 @@
       "scope": "#/properties/content",
       "options": {
         "multi": true,
-        "description": "A Kotlin script code"
+        "description": ""
       }
     },
     {

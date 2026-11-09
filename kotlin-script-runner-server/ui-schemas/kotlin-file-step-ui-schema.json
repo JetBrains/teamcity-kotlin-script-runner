@@ -1,5 +1,6 @@
 {
   "title": "Kotlin Script - Script File",
+  "description": "Kotlin Script runner",
   "type": "VerticalLayout",
   "elements": [
     {
