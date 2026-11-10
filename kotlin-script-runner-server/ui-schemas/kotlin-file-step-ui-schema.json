@@ -46,12 +46,18 @@
         {
           "type": "Control",
           "label": "Script parameters",
-          "scope": "#/properties/arguments"
+          "scope": "#/properties/arguments",
+          "options": {
+            "resizable": true
+          }
         },
         {
           "type": "Control",
           "label": "JVM command line parameters",
-          "scope": "#/properties/jvm-args"
+          "scope": "#/properties/jvm-args",
+          "options": {
+            "resizable": true
+          }
         }
       ]
     }
